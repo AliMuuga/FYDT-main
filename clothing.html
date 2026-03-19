@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clothing - FYDT</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor"></div>
+
+<!-- HEADER -->
+<header>
+   <img src="images/FYDT/LOGOO.jpg" height="40" alt="FYDT Logo">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="Models.html">Models</a>
+    <a href="posters.html">Posters</a>
+    <div class="theme-icon" id="themeIcon" title="Switch theme">
+      <div class="sun"></div>
+    </div>
+  </nav>
+</header>
+
+<!-- PAGE TITLE -->
+<h1 style="padding-top:120px;text-align:center;">Clothing</h1>
+<p style="text-align:center;color:#888;margin-top:10px;">FYDT Streetwear — The clothes I designed</p>
+
+<!-- IMAGE GRID -->
+<div class="grid">
+  <!-- CLOTHING 1 -->
+  <div class="card morph-target">
+    <img src="images/Clothing/Broke v1.jpg" class="variant-img" style="display:block">
+    <img src="images/Clothing/broke v2.jpg" class="variant-img" style="display:block">
+    <img src="images/Clothing/broke v3.jpg" class="variant-img" style="display:block">
+    <div class="name">Broke (Its not real)</div>
+  </div>
+
+  <!-- CLOTHING 2 -->
+  <div class="card morph-target">
+    <img src="images/Clothing/Retro (1).jpg" class="variant-img" style="display:block">
+    <img src="images/Clothing/Retro (2).jpg" class="variant-img" style="display:block">
+    <img src="images/Clothing/Retro (3).jpg" class="variant-img" style="display:block">
+     <img src="images/Clothing/Retro (4).jpg" class="variant-img" style="display:block">
+    <div class="name">Old Jeresy</div>
+  </div>
+
+  <!-- CLOTHING 3 -->
+  <div class="card morph-target">
+    <img src="images/Clothing/BCard (1).jpg" class="variant-img" style="display:block">
+    <img src="images/Clothing/BCard (2).jpg" class="variant-img" style="display:block">
+    <div class="name">Buring man Cardigan</div>
+  </div>
+
+  <!-- CLOTHING 4 -->
+  <div class="card morph-target">
+    <img src="images/Clothing/Alien (1).jpg" class="variant-img" style="display:block">
+    <img src="images/Clothing/Alien (2).jpg" class="variant-img" style="display:block">
+    <div class="name">Alien Tee</div>
+  </div>
+</div>
+
+<!-- GLITCH TRANSITION -->
+<div class="glitch-transition"></div>
+
+<!-- SCRIPTS -->
+<script>
+// CUSTOM CURSOR
+const cursor = document.querySelector('.cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+
+// SUN THEME TOGGLE
+const themeIcon = document.getElementById('themeIcon');
+themeIcon.addEventListener('click', () => {
+  document.body.classList.toggle('night');
+});
+
+// MORPHING IMAGES ON HOVER
+const morphCards = document.querySelectorAll('.morph-target');
+morphCards.forEach(card => {
+  const imgs = card.querySelectorAll('.variant-img');
+  let index = 0;
+  card.addEventListener('mouseenter', () => {
+    card.morphInterval = setInterval(() => {
+      imgs[index].style.display = 'none';
+      index = (index + 1) % imgs.length;
+      imgs[index].style.display = 'block';
+    }, 1000);
+  });
+  card.addEventListener('mouseleave', () => {
+    clearInterval(card.morphInterval);
+    imgs.forEach((img, i) => img.style.display = i === 0 ? 'block' : 'none');
+  });
+});
+</script>
+
+</body>
+</html>

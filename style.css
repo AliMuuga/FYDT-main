@@ -1,0 +1,311 @@
+/* =========================
+   IMPORT FONTS
+========================= */
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Montserrat:wght@300;600&display=swap');
+
+/* =========================
+   RESET
+========================= */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+body{
+  background:#0a0a0a;
+  color:#fff;
+  font-family:'Montserrat',sans-serif;
+  cursor:none; /* hide default cursor */
+  transition:0.4s;
+  overflow-x:hidden;
+}
+
+/* =========================
+   GRAFFITI FONT
+========================= */
+h1,h2,h3{
+  font-family:'Permanent Marker', cursive;
+  letter-spacing:2px;
+}
+
+/* =========================
+   HEADER
+========================= */
+header{
+  position:fixed;
+  width:100%;
+  padding:20px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,0.5);
+  backdrop-filter:blur(12px);
+  z-index:1000;
+}
+header img{
+  height:40px;
+  width:auto;
+}
+nav a{
+  margin-left:25px;
+  text-decoration:none;
+  color:#aaa;
+  transition:0.3s;
+  font-size:16px;
+}
+nav a:hover{color:#fff;}
+
+/* =========================
+   HERO SECTION
+========================= */
+.hero{
+  position:relative;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  overflow:hidden;
+  padding:20px;
+}
+.hero video.scene{
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition:1.5s ease-in-out;
+  z-index:-1;
+}
+.hero video.scene.active{
+  opacity:1;
+}
+#heroText{
+  font-size:3rem;
+  z-index:10;
+  position:relative;
+  transition:0.5s;
+}
+#heroSubtitle{
+  margin-top:15px;
+  color:#fff;
+  font-size:18px;
+  z-index:10;
+  position:relative;
+  transition:0.5s;
+}
+
+/* =========================
+   DVD LOGO
+========================= */
+.dvd-logo{
+  position:absolute;
+  z-index:20;
+  pointer-events:none;
+  border-radius:5px;
+  width:80px;
+  height:40px;
+  filter: drop-shadow(0 0 15px #00ffff);
+  transition: filter 0.2s;
+}
+
+/* =========================
+   GRID SECTION
+========================= */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+  padding:120px 40px;
+}
+@media(max-width:1000px){
+  .grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:600px){
+  .grid{grid-template-columns:1fr; padding:80px 20px;}
+}
+.card{
+  position:relative;
+  cursor:pointer;
+  overflow:hidden;
+  border-radius:10px;
+  transition:0.5s;
+}
+.card img{
+  width:100%;
+  border-radius:10px;
+  transition:0.4s;
+  display:block;
+  box-shadow: 0 0 20px rgba(255,255,255,0.2);
+}
+.card:hover img{
+  transform:scale(1.05);
+  box-shadow:0 0 30px 5px rgba(255,255,255,0.5);
+}
+
+/* =========================
+   IMAGE NAMES
+========================= */
+.card .name{
+  text-align:center;
+  margin-top:10px;
+  font-family:'Permanent Marker',cursive;
+  color:#fff;
+  font-size:16px;
+}
+
+/* =========================
+   PARTICLE TRAIL ON HOVER
+========================= */
+.card:hover::after{
+  content:'';
+  position:absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  border-radius:10px;
+  box-shadow: 0 0 40px 5px rgba(255,255,255,0.4), 
+              0 0 60px 10px rgba(255,0,255,0.2), 
+              0 0 80px 15px rgba(0,255,255,0.2);
+  animation:glowPulse 1s infinite alternate;
+}
+@keyframes glowPulse{
+  0%{box-shadow: 0 0 20px 5px rgba(255,255,255,0.3),0 0 40px 10px rgba(255,0,255,0.2);}
+  50%{box-shadow: 0 0 30px 10px rgba(255,255,255,0.5),0 0 60px 15px rgba(255,0,255,0.3);}
+  100%{box-shadow: 0 0 40px 5px rgba(255,255,255,0.4),0 0 60px 10px rgba(255,0,255,0.2);}
+}
+
+/* =========================
+   CUSTOM CURSOR
+========================= */
+.cursor{
+  position:fixed;
+  width:18px;
+  height:18px;
+  background:#fff;
+  border-radius:50%;
+  pointer-events:none;
+  mix-blend-mode:difference;
+  z-index:9999;
+  transition:transform 0.1s linear, box-shadow 0.2s;
+  box-shadow: 0 0 10px rgba(255,255,255,0.5),
+              0 0 20px rgba(255,255,255,0.3),
+              0 0 30px rgba(255,255,255,0.2);
+}
+@media(max-width:600px){
+  .cursor{
+    width:12px;
+    height:12px;
+  }
+}
+
+/* =========================
+   GLITCH PAGE TRANSITION
+========================= */
+.glitch-transition{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:black;
+  opacity:0;
+  pointer-events:none;
+  z-index:2000;
+  transition:0.3s;
+}
+.glitch-active{
+  animation:glitchPage 0.6s forwards;
+}
+@keyframes glitchPage{
+  0%{opacity:0; transform:scale(1);}
+  30%{opacity:1; transform:scale(1.05) rotate(1deg);}
+  60%{transform:scale(0.98) rotate(-1deg);}
+  100%{opacity:1; transform:scale(1);}
+}
+
+/* =========================
+   RESPONSIVE HERO TEXT
+========================= */
+@media(max-width:1000px){
+  #heroText{font-size:2.2rem;}
+  #heroSubtitle{font-size:16px; max-width:80%;}
+}
+@media(max-width:600px){
+  #heroText{font-size:1.6rem;}
+  #heroSubtitle{font-size:14px; max-width:90%;}
+}
+
+/* DVD LOGO */
+.dvd-logo{
+  position:absolute;
+  z-index:5; /* below hero text (z-index 10) but above video (z-index -1) */
+  pointer-events:none;
+  border-radius:5px;
+  width:80px;
+  height:40px;
+  filter: drop-shadow(0 0 15px #00ffff);
+  transition: filter 0.2s;
+}
+
+/* LOGO FIX */
+.logo{
+  height:40px;
+  width:auto;
+  display:block;
+}
+
+/* HERO CONTENT LAYER */
+.hero-content{
+  position:relative;
+  z-index:15;
+  text-align:center;
+}
+
+/* STAR CANVAS */
+#starCanvas{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:5;
+  pointer-events:none;
+}
+
+/* VIDEO BEHIND EVERYTHING */
+.hero video{
+  z-index:-2;
+}
+
+/* DVD LOGO LAYER */
+.dvd-logo{
+  z-index:8;
+}
+
+/* TEXT ABOVE EVERYTHING */
+#heroText, #heroSubtitle{
+  z-index:20;
+  position:relative;
+}
+
+/* SLOGAN ANIMATION */
+#heroSubtitle{
+  margin-top:20px;
+  font-size:20px;
+  opacity:0;
+  animation:fadeIn 2.5s ease forwards;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}

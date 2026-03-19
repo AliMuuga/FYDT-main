@@ -88,12 +88,14 @@ nav a:hover{color:#fff;}
   transition:0.5s;
 }
 #heroSubtitle{
-  margin-top:15px;
+  margin-top:20px;
   color:#fff;
-  font-size:18px;
-  z-index:10;
+  font-size:20px;
+  z-index:20;
   position:relative;
   transition:0.5s;
+  opacity:0;
+  animation:fadeIn 2.5s ease forwards;
 }
 
 /* =========================
@@ -101,7 +103,7 @@ nav a:hover{color:#fff;}
 ========================= */
 .dvd-logo{
   position:absolute;
-  z-index:20;
+  z-index:8;
   pointer-events:none;
   border-radius:5px;
   width:80px;
@@ -238,17 +240,6 @@ nav a:hover{color:#fff;}
   #heroSubtitle{font-size:14px; max-width:90%;}
 }
 
-/* DVD LOGO */
-.dvd-logo{
-  position:absolute;
-  z-index:5; /* below hero text (z-index 10) but above video (z-index -1) */
-  pointer-events:none;
-  border-radius:5px;
-  width:80px;
-  height:40px;
-  filter: drop-shadow(0 0 15px #00ffff);
-  transition: filter 0.2s;
-}
 
 /* LOGO FIX */
 .logo{
@@ -280,10 +271,6 @@ nav a:hover{color:#fff;}
   z-index:-2;
 }
 
-/* DVD LOGO LAYER */
-.dvd-logo{
-  z-index:8;
-}
 
 /* TEXT ABOVE EVERYTHING */
 #heroText, #heroSubtitle{
@@ -291,13 +278,6 @@ nav a:hover{color:#fff;}
   position:relative;
 }
 
-/* SLOGAN ANIMATION */
-#heroSubtitle{
-  margin-top:20px;
-  font-size:20px;
-  opacity:0;
-  animation:fadeIn 2.5s ease forwards;
-}
 
 @keyframes fadeIn{
   from{
@@ -338,11 +318,6 @@ body.light .mode-toggle::after{
   transform:translateX(24px);
 }
 
-/* LIGHT MODE */
-body.light{
-  background: radial-gradient(circle,#fff,#dcdcdc);
-  color:#111;
-}
 
 /* HAMBURGER */
 .hamburger{display:none;flex-direction:column;gap:5px;}
@@ -452,9 +427,6 @@ body.light{
 /* =========================
    MAGNETIC HOVER
 ========================= */
-.card{
-  transition: transform 0.3s ease;
-}
 
 /* =========================
    HERO PARALLAX
@@ -502,4 +474,29 @@ body.light header {
   background: rgba(255, 255, 255, 0.741); /* adjust opacity for strength */
   border: 1px solid rgba(255, 255, 255, 0.679); /* lighter border for visibility */
   backdrop-filter: blur(20px); /* keep the blur effect */
+}
+/* =========================
+  IMAGE OPTIMIZATION
+========================= */
+.card img {
+  width: 100%;
+  border-radius: 10px;
+  transition: 0.4s;
+  display: block;
+  box-shadow: 0 0 20px rgba(255,255,255,0.2);
+  /* Optimize image loading */
+  content-visibility: auto;
+  object-fit: cover;
+  aspect-ratio: 1;
+}
+
+/* Reduce animation on mobile for better performance */
+@media(max-width:600px) {
+  .card img {
+   content-visibility: auto;
+  }
+  
+  .card:hover::after {
+   animation: none; /* Disable glow animation on mobile */
+  }
 }

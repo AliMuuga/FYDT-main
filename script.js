@@ -1,3 +1,47 @@
+
+/* =========================
+  IMAGE LAZY LOADING
+========================= */
+const imageObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+   if (entry.isIntersecting) {
+    const img = entry.target;
+    img.src = img.dataset.src;
+    img.classList.add('loaded');
+    observer.unobserve(img);
+   }
+  });
+}, { rootMargin: '50px' });
+
+document.querySelectorAll('img[data-src]').forEach(img => imageObserver.observe(img));
+
+/* =========================
+  MORPHING IMAGES (Updated with Lazy Load)
+========================= */
+const morphCards = document.querySelectorAll('.morph-target');
+morphCards.forEach(card=>{
+  const imgs = card.querySelectorAll('.variant-img');
+  let index=0;
+  card.addEventListener('mouseenter',()=>{
+   card.morphInterval=setInterval(()=>{
+    imgs[index].style.display='none';
+    index=(index+1)%imgs.length;
+    imgs[index].style.display='block';
+    // Lazy load the image when visible
+    if(imgs[index].dataset.src && !imgs[index].src) {
+      imgs[index].src = imgs[index].dataset.src;
+    }
+   },1000);
+  });
+  card.addEventListener('mouseleave',()=>{
+   clearInterval(card.morphInterval);
+   imgs.forEach((img,i)=> img.style.display = i===0?'block':'none');
+  });
+});
+
+
+
+
 /* =========================
    CUSTOM CURSOR
 ========================= */

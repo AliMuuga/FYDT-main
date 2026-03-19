@@ -133,42 +133,23 @@ if(modeToggle){
 }
 
 /* =========================
-   MORPHING IMAGES - PAUSEABLE
+   MORPHING IMAGES - works with any number of images per card
 ========================= */
 const morphCards = document.querySelectorAll('.morph-target');
-
-morphCards.forEach(card => {
+morphCards.forEach(card=>{
   const imgs = card.querySelectorAll('.variant-img');
-  let index = 0;
-
-  // Set first image visible
-  imgs.forEach((img, i) => img.style.display = i === 0 ? 'block' : 'none');
-
-  card.addEventListener('mouseenter', () => {
-    // show next image on hover
-    if(imgs.length > 1){
-      card.addEventListener('mousemove', moveImage);
-    }
+  let index=0;
+  card.addEventListener('mouseenter',()=>{
+    card.morphInterval=setInterval(()=>{
+      imgs[index].style.display='none';
+      index=(index+1)%imgs.length;
+      imgs[index].style.display='block';
+    },1000); // change 1000 to slower/faster cycling (in ms)
   });
-
-  card.addEventListener('mouseleave', () => {
-    card.removeEventListener('mousemove', moveImage);
-    // reset to first image
+  card.addEventListener('mouseleave',()=>{
+    clearInterval(card.morphInterval);
     imgs.forEach((img,i)=> img.style.display = i===0?'block':'none');
-    index = 0;
   });
-
-  function moveImage(e){
-    // Option 1: switch image every 300ms while moving cursor inside card
-    if(!card.lastSwitchTime) card.lastSwitchTime = 0;
-    const now = Date.now();
-    if(now - card.lastSwitchTime > 300){ // change delay here
-      imgs[index].style.display = 'none';
-      index = (index+1)%imgs.length;
-      imgs[index].style.display = 'block';
-      card.lastSwitchTime = now;
-    }
-  }
 });
 
 

@@ -2,23 +2,29 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="images/FYDT/Favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FYDT Portfolio</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- CUSTOM CURSOR -->
 <div class="cursor"></div>
 
+<!-- HEADER -->
 <header>
-  <img src="images/FYDT/LOGOO.jpg" height="40" alt="FYDT Logo">
+  <img src="images/FYDT/LOGO.png" class="logo" alt="FYDT Logo">
+  <div class="mode-toggle" id="modeToggle"></div>
   <nav>
     <a href="models.html">Models</a>
     <a href="posters.html">Posters</a>
     <a href="clothing.html">Clothing</a>
   </nav>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
 </header>
 
+<!-- HERO SECTION -->
 <section class="hero">
   <video autoplay muted loop class="scene active">
     <source src="videos/scene1.mp4" type="video/mp4">
@@ -31,7 +37,7 @@
   </video>
 
   <canvas id="starCanvas"></canvas>
-  <img src="images/FYDT/LOGO.jpg" class="dvd-logo" alt="DVD Logo">
+  <img src="images/FYDT/LOGOO.png" class="dvd-logo" alt="DVD Logo">
 
   <div class="hero-content">
     <h1 id="heroText">FYDT</h1>
@@ -39,9 +45,18 @@
   </div>
 </section>
 
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="socials">
+    <a href="#"><i class="ig"></i></a>
+    <a href="#"><i class="tiktok"></i></a>
+    <a href="#"><i class="email"></i></a>
+  </div>
+</footer>
+
+<!-- GLITCH TRANSITION -->
 <div class="glitch-transition"></div>
 
 <script src="script.js"></script>
-
 </body>
 </html>

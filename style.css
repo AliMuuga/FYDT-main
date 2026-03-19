@@ -308,4 +308,168 @@ nav a:hover{color:#fff;}
     opacity:1;
     transform:translateY(0);
   }
+} 
+
+/* GLASS */
+.glass, .card, header{
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  border:1px solid rgba(255,255,255,0.1);
+}
+
+/* HEADER */
+header{ border-radius:0 !important; }
+
+/* TOGGLE */
+.mode-toggle{
+  width:50px;height:26px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.2);
+  position:relative;cursor:pointer;
+}
+.mode-toggle::after{
+  content:'';position:absolute;
+  width:22px;height:22px;
+  background:#fff;border-radius:50%;
+  top:2px;left:2px;
+  transition:0.3s;
+}
+body.light .mode-toggle::after{
+  transform:translateX(24px);
+}
+
+/* LIGHT MODE */
+body.light{
+  background: radial-gradient(circle,#fff,#dcdcdc);
+  color:#111;
+}
+
+/* HAMBURGER */
+.hamburger{display:none;flex-direction:column;gap:5px;}
+.hamburger span{width:25px;height:3px;background:#fff;}
+
+@media(max-width:768px){
+  nav{
+    position:absolute;
+    top:80px;right:0;
+    flex-direction:column;
+    transform:translateX(100%);
+    background:rgba(0,0,0,0.6);
+    backdrop-filter:blur(20px);
+  }
+  nav.active{transform:translateX(0);}
+  .hamburger{display:flex;}
+}
+
+/* FOOTER */
+.footer{text-align:center;padding:40px;}
+.socials{display:flex;justify-content:center;gap:20px;}
+.socials a{
+  width:55px;height:55px;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(15px);
+  background:rgba(255,255,255,0.1);
+}
+
+/* ICONS */
+.ig,.tiktok,.email{
+  width:20px;height:20px;background:white;
+}
+.ig{
+  mask:url('https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg') no-repeat center;
+  -webkit-mask:url('https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg') no-repeat center;
+}
+.tiktok{
+  mask:url('https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/tiktok.svg') no-repeat center;
+  -webkit-mask:url('https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/tiktok.svg') no-repeat center;
+}
+.email{
+  mask:url('https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/gmail.svg') no-repeat center;
+  -webkit-mask:url('https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/gmail.svg') no-repeat center;
+}
+
+/* ABOUT */
+.about{
+  margin:80px auto;
+  padding:40px;
+  max-width:700px;
+  text-align:center;
+}
+
+/* =========================
+   GLITCH TEXT EFFECT
+========================= */
+.glitch{
+  position:relative;
+  display:inline-block;
+}
+
+.glitch::before,
+.glitch::after{
+  content:attr(data-text);
+  position:absolute;
+  left:0;
+  width:100%;
+  opacity:0.7;
+}
+
+.glitch::before{
+  color:#ff00ff;
+  animation:glitchTop 1s infinite;
+}
+
+.glitch::after{
+  color:#00ffff;
+  animation:glitchBottom 1s infinite;
+}
+
+@keyframes glitchTop{
+  0%{transform:translate(0);}
+  50%{transform:translate(-2px,-2px);}
+  100%{transform:translate(0);}
+}
+
+@keyframes glitchBottom{
+  0%{transform:translate(0);}
+  50%{transform:translate(2px,2px);}
+  100%{transform:translate(0);}
+}
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+.reveal{
+  opacity:0;
+  transform:translateY(40px);
+  transition:0.8s ease;
+}
+
+.reveal.active{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* =========================
+   MAGNETIC HOVER
+========================= */
+.card{
+  transition: transform 0.3s ease;
+}
+
+/* =========================
+   HERO PARALLAX
+========================= */
+.hero{
+  perspective:1000px;
+}
+
+/* =========================
+   STRONGER CARD HOVER
+========================= */
+.card:hover{
+  transform: translateY(-10px) scale(1.03) rotateX(2deg);
+  box-shadow:
+    0 0 30px rgba(255,255,255,0.3),
+    0 0 60px rgba(255,0,255,0.2),
+    0 0 80px rgba(0,255,255,0.2);
 }

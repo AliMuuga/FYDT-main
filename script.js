@@ -120,3 +120,68 @@ morphCards.forEach(card=>{
     imgs.forEach((img,i)=> img.style.display = i===0?'block':'none');
   });
 });
+
+/* HAMBURGER */
+const hamburger = document.getElementById('hamburger');
+const nav = document.querySelector('nav');
+if(hamburger){
+  hamburger.addEventListener('click', ()=>{
+    nav.classList.toggle('active');
+  });
+}
+
+/* LIGHT MODE */
+const modeToggle = document.getElementById('modeToggle');
+if(modeToggle){
+  modeToggle.addEventListener('click', ()=>{
+    document.body.classList.toggle('light');
+  });
+}
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+const reveals = document.querySelectorAll('.reveal');
+
+function revealOnScroll(){
+  reveals.forEach(el=>{
+    const windowHeight = window.innerHeight;
+    const elementTop = el.getBoundingClientRect().top;
+
+    if(elementTop < windowHeight - 100){
+      el.classList.add('active');
+    }
+  });
+}
+window.addEventListener('scroll', revealOnScroll);
+
+/* =========================
+   MAGNETIC EFFECT
+========================= */
+document.querySelectorAll('.card').forEach(card=>{
+  card.addEventListener('mousemove', (e)=>{
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width/2;
+    const y = e.clientY - rect.top - rect.height/2;
+
+    card.style.transform = `translate(${x*0.1}px, ${y*0.1}px) scale(1.03)`;
+  });
+
+  card.addEventListener('mouseleave', ()=>{
+    card.style.transform = '';
+  });
+});
+
+/* =========================
+   HERO PARALLAX
+========================= */
+const hero = document.querySelector('.hero');
+
+if(hero){
+  hero.addEventListener('mousemove', (e)=>{
+    const x = (e.clientX / window.innerWidth - 0.5) * 20;
+    const y = (e.clientY / window.innerHeight - 0.5) * 20;
+
+    hero.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+  });
+}

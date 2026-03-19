@@ -186,3 +186,83 @@ document.querySelectorAll('.card').forEach(card=>{
   });
   card.addEventListener('mouseleave', ()=>{ card.style.transform = ''; });
 })
+/* ================= LIGHTBOX VIEWER ================= */
+
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const closeBtn = document.querySelector('.lightbox .close');
+const nextBtn = document.querySelector('.lightbox .next');
+const prevBtn = document.querySelector('.lightbox .prev');
+
+let currentImages = [];
+let currentIndex = 0;
+
+/* OPEN LIGHTBOX */
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('click', () => {
+    currentImages = card.querySelectorAll('.variant-img');
+    currentIndex = 0;
+
+    // find visible image
+    currentImages.forEach((img, i) => {
+      if (img.style.display !== 'none') {
+        currentIndex = i;
+      }
+    });
+
+    showImage();
+    lightbox.classList.add('active');
+  });
+});
+
+/* SHOW IMAGE */
+function showImage() {
+  lightboxImg.src = currentImages[currentIndex].src;
+}
+
+/* NEXT */
+nextBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % currentImages.length;
+  showImage();
+});
+
+/* PREV */
+prevBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+  showImage();
+});
+
+/* CLOSE */
+closeBtn.addEventListener('click', () => {
+  lightbox.classList.remove('active');
+});
+
+/* CLICK OUTSIDE TO CLOSE */
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) {
+    lightbox.classList.remove('active');
+  }
+});
+
+/* KEYBOARD SUPPORT */
+document.addEventListener('keydown', (e) => {
+  if (!lightbox.classList.contains('active')) return;
+
+  if (e.key === 'ArrowRight') nextBtn.click();
+  if (e.key === 'ArrowLeft') prevBtn.click();
+  if (e.key === 'Escape') closeBtn.click();
+});
+
+/* SWIPE SUPPORT (MOBILE) */
+let startX = 0;
+
+lightbox.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+});
+
+lightbox.addEventListener('touchend', e => {
+  let endX = e.changedTouches[0].clientX;
+
+  if (startX - endX > 50) nextBtn.click();
+  if (endX - startX > 50) prevBtn.click();
+});

@@ -709,48 +709,7 @@ body.light .footer {
   border-color: rgba(135,206,235,0.3);
 }
 
-/* ================= MOBILE NAV FIX ================= */
 
-#mainNav {
-  display: flex;
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
-
-  #mainNav {
-    position: absolute;
-    top: 80px;
-    left: 0;
-    width: 100%;
-
-    flex-direction: column;
-    align-items: center;
-
-    background: rgba(0,0,0,0.95);
-    backdrop-filter: blur(10px);
-
-    max-height: 0;
-    overflow: hidden;
-
-    transition: max-height 0.4s ease;
-  }
-
-  #mainNav a {
-    padding: 1rem;
-    width: 100%;
-    text-align: center;
-    font-size: 1.2rem;
-  }
-
-  #mainNav.active {
-    max-height: 300px;
-  }
-
-  .hamburger {
-    display: flex;
-  }
-}
 /* ================= LIGHTBOX ================= */
 
 .lightbox {

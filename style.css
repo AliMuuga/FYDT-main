@@ -1,502 +1,767 @@
 /* =========================
-   IMPORT FONTS
+  IMPORT FONTS
+  Loads Permanent Marker (graffiti-style) and Montserrat (clean sans-serif)
 ========================= */
-@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Montserrat:wght@300;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Montserrat:wght@300;400;600;900&display=swap');
 
 /* =========================
-   RESET
+  RESET + BASE STYLES
+  Removes default browser margins/padding and sets global styling
 ========================= */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-body{
-  background:#0a0a0a;
-  color:#fff;
-  font-family:'Montserrat',sans-serif;
-  cursor:none; /* hide default cursor */
-  transition:0.4s;
-  overflow-x:hidden;
+* {
+  /* Remove default spacing from all elements */
+  margin: 0;
+  padding: 0;
+  /* Use border-box so padding/borders don't add to element size */
+  box-sizing: border-box;
 }
 
-/* =========================
-   GRAFFITI FONT
-========================= */
-h1,h2,h3{
-  font-family:'Permanent Marker', cursive;
-  letter-spacing:2px;
+body {
+  /* Dark background color (#0a0a0a = almost pure black) */
+  background: #0a0a0a;
+  /* Default text color = white */
+  color: #fff;
+  /* Primary font family with serif fallback */
+  font-family: 'Montserrat', sans-serif;
+  /* Hide default cursor (custom cursor added via JS) */
+  cursor: none;
+  /* Smooth transitions when switching between dark/light modes */
+  transition: background 0.8s ease, color 0.8s ease;
+  /* Prevent horizontal scrollbar from appearing */
+  overflow-x: hidden;
+  /* Needed for positioning pseudo-elements */
+  position: relative;
 }
 
-/* =========================
-   HEADER
-========================= */
-header{
-  position:fixed;
-  width:100%;
-  padding:20px 40px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:rgba(0,0,0,0.5);
-  backdrop-filter:blur(12px);
-  z-index:1000;
-}
-header img{
-  height:40px;
-  width:auto;
-}
-nav a{
-  margin-left:25px;
-  text-decoration:none;
-  color:#aaa;
-  transition:0.3s;
-  font-size:16px;
-}
-nav a:hover{color:#fff;}
-
-/* =========================
-   HERO SECTION
-========================= */
-.hero{
-  position:relative;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  overflow:hidden;
-  padding:20px;
-}
-.hero video.scene{
-  position:absolute;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  opacity:0;
-  transition:1.5s ease-in-out;
-  z-index:-1;
-}
-.hero video.scene.active{
-  opacity:1;
-}
-#heroText{
-  font-size:3rem;
-  z-index:10;
-  position:relative;
-  transition:0.5s;
-}
-#heroSubtitle{
-  margin-top:20px;
-  color:#fff;
-  font-size:20px;
-  z-index:20;
-  position:relative;
-  transition:0.5s;
-  opacity:0;
-  animation:fadeIn 2.5s ease forwards;
+/* Strong grain/noise texture overlay - adds gritty, film-like effect */
+body::after {
+  /* Required for pseudo-elements to display */
+  content: '';
+  /* Fixes overlay to viewport so it doesn't scroll */
+  position: fixed;
+  /* inset: 0 = top/right/bottom/left all 0 (covers entire screen) */
+  inset: 0;
+  /* SVG data-URI creates fractal noise pattern */
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="5" /><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"/></filter><rect width="100%" height="100%" filter="url(%23n)"/></svg>') repeat;
+  /* Prevents overlay from blocking clicks on interactive elements */
+  pointer-events: none;
+  /* 12% opacity so texture is subtle, not overwhelming */
+  opacity: 0.12;
+  /* Overlay blend mode creates natural grain effect */
+  mix-blend-mode: overlay;
+  /* Sits on top of everything except custom cursor */
+  z-index: 9998;
 }
 
-/* =========================
-   DVD LOGO
-========================= */
-.dvd-logo{
-  position:absolute;
-  z-index:8;
-  pointer-events:none;
-  border-radius:5px;
-  width:80px;
-  height:40px;
-  filter: drop-shadow(0 0 15px #00ffff);
-  transition: filter 0.2s;
+/* Moving clouds - only visible in light mode, animated right to left */
+.clouds {
+  /* Fixed positioning covers entire viewport */
+  position: fixed;
+  /* inset: 0 = stretches to fill all edges */
+  inset: 0;
+  /* Allows elements beneath to be clickable */
+  pointer-events: none;
+  /* Below stars but above main content */
+  z-index: -3;
+  /* Hidden by default (dark mode) */
+  display: none;
 }
 
-/* =========================
-   GRID SECTION
-========================= */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:20px;
-  padding:120px 40px;
-}
-@media(max-width:1000px){
-  .grid{grid-template-columns:repeat(2,1fr);}
-}
-@media(max-width:600px){
-  .grid{grid-template-columns:1fr; padding:80px 20px;}
-}
-.card{
-  position:relative;
-  cursor:pointer;
-  overflow:hidden;
-  border-radius:10px;
-  transition:0.5s;
-}
-.card img{
-  width:100%;
-  border-radius:10px;
-  transition:0.4s;
-  display:block;
-  box-shadow: 0 0 20px rgba(255,255,255,0.2);
-}
-.card:hover img{
-  transform:scale(1.05);
-  box-shadow:0 0 30px 5px rgba(255,255,255,0.5);
+/* Show clouds only in light mode */
+body.light .clouds {
+  display: block;
 }
 
-/* =========================
-   IMAGE NAMES
-========================= */
-.card .name{
-  text-align:center;
-  margin-top:10px;
-  font-family:'Permanent Marker',cursive;
-  color:#fff;
-  font-size:16px;
+/* Individual cloud styling */
+.cloud {
+  /* Positioned absolutely within .clouds container */
+  position: absolute;
+  /* Bright white with high opacity for visibility */
+  background: rgba(255, 255, 255, 0.9);
+  /* 50% border-radius creates circular shape */
+  border-radius: 50%;
+  /* Slightly transparent for ethereal effect */
+  opacity: 0.75;
+  /* Outer glow + inner highlight for 3D fluffy appearance */
+  box-shadow: 
+   0 0 40px rgba(255,255,255,0.6),        /* soft outer glow */
+   inset 0 0 20px rgba(255,255,255,0.4);  /* bright inner highlight */
+  /* Animates from right to left infinitely */
+  animation: driftRightToLeft linear infinite;
 }
 
-/* =========================
-   PARTICLE TRAIL ON HOVER
-========================= */
-.card:hover::after{
-  content:'';
-  position:absolute;
-  width:100%;
-  height:100%;
-  top:0;
-  left:0;
-  border-radius:10px;
-  box-shadow: 0 0 40px 5px rgba(255,255,255,0.4), 
-              0 0 60px 10px rgba(255,0,255,0.2), 
-              0 0 80px 15px rgba(0,255,255,0.2);
-  animation:glowPulse 1s infinite alternate;
-}
-@keyframes glowPulse{
-  0%{box-shadow: 0 0 20px 5px rgba(255,255,255,0.3),0 0 40px 10px rgba(255,0,255,0.2);}
-  50%{box-shadow: 0 0 30px 10px rgba(255,255,255,0.5),0 0 60px 15px rgba(255,0,255,0.3);}
-  100%{box-shadow: 0 0 40px 5px rgba(255,255,255,0.4),0 0 60px 10px rgba(255,0,255,0.2);}
+/* Pseudo-elements create fluffy, multi-bubble cloud shape */
+.cloud::before,
+.cloud::after {
+  /* Required for pseudo-elements to render */
+  content: '';
+  /* Positioned relative to parent cloud */
+  position: absolute;
+  /* Inherits parent's white background */
+  background: inherit;
+  /* Creates bubble shapes */
+  border-radius: 50%;
 }
 
-/* =========================
-   CUSTOM CURSOR
-========================= */
-.cursor{
-  position:fixed;
-  width:18px;
-  height:18px;
-  background:#fff;
-  border-radius:50%;
-  pointer-events:none;
-  mix-blend-mode:difference;
-  z-index:9999;
-  transition:transform 0.1s linear, box-shadow 0.2s;
-  box-shadow: 0 0 10px rgba(255,255,255,0.5),
-              0 0 20px rgba(255,255,255,0.3),
-              0 0 30px rgba(255,255,255,0.2);
+/* Cloud 1 - large, positioned at 10% from top */
+.cloud:nth-child(1) {
+  width: 260px;
+  height: 100px;
+  top: 10%;
+  /* Starts off-screen to the right */
+  right: -300px;
+  /* Takes 160 seconds to drift across screen */
+  animation-duration: 160s;
 }
-@media(max-width:600px){
-  .cursor{
-    width:12px;
-    height:12px;
-  }
+/* Bubble 1a - creates bumpy left edge */
+.cloud:nth-child(1)::before {
+  width: 180px;
+  height: 80px;
+  top: -30px; /* overlaps main cloud */
+  left: 40px;
+}
+/* Bubble 1b - creates bumpy right edge */
+.cloud:nth-child(1)::after {
+  width: 140px;
+  height: 70px;
+  top: -20px;
+  right: 50px;
+}
+
+/* Cloud 2 - largest, positioned at 25% from top */
+.cloud:nth-child(2) {
+  width: 320px;
+  height: 120px;
+  top: 25%;
+  right: -380px;
+  /* 200 second animation */
+  animation-duration: 200s;
+  /* Starts 50 seconds into animation for staggered effect */
+  animation-delay: -50s;
+}
+/* Bubble 2a */
+.cloud:nth-child(2)::before {
+  width: 220px;
+  height: 90px;
+  top: -40px;
+  left: 60px;
+}
+/* Bubble 2b */
+.cloud:nth-child(2)::after {
+  width: 160px;
+  height: 80px;
+  top: -25px;
+  right: 70px;
+}
+
+/* Cloud 3 - smallest, positioned at 42% from top */
+.cloud:nth-child(3) {
+  width: 220px;
+  height: 90px;
+  top: 42%;
+  right: -280px;
+  /* 240 second animation - slowest drift */
+  animation-duration: 240s;
+  /* Starts 100 seconds in for varied timing */
+  animation-delay: -100s;
+}
+/* Bubble 3a */
+.cloud:nth-child(3)::before {
+  width: 150px;
+  height: 70px;
+  top: -30px;
+  left: 50px;
+}
+/* Bubble 3b */
+.cloud:nth-child(3)::after {
+  width: 120px;
+  height: 60px;
+  top: -20px;
+  right: 40px;
+}
+
+/* Animation: clouds drift from right edge to off-screen left */
+@keyframes driftRightToLeft {
+  /* Starting position - at natural right position */
+  0%   { transform: translateX(0); }
+  /* Ending position - moved far left (100vw + buffer) */
+  100% { transform: translateX(calc(-100vw - 400px)); }
 }
 
 /* =========================
-   GLITCH PAGE TRANSITION
+  HEADER LAYOUT
+  Fixed top bar with toggle (left), logo (center), nav (right)
 ========================= */
-.glitch-transition{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:black;
-  opacity:0;
-  pointer-events:none;
-  z-index:2000;
-  transition:0.3s;
+header {
+  /* Stays at top when scrolling */
+  position: fixed;
+  /* Spans full viewport width */
+  width: 100%;
+  /* Padding: 1.2rem vertical, 5% horizontal of screen */
+  padding: 1.2rem 5%;
+  /* Flexbox for alignment */
+  display: flex;
+  /* Spreads children to far edges (toggle left, logo center, nav right) */
+  justify-content: space-between;
+  /* Vertically centers all items */
+  align-items: center;
+  /* Semi-transparent dark background */
+  background: rgba(10, 10, 30, 0.5);
+  /* Blur effect for frosted glass appearance */
+  backdrop-filter: blur(16px);
+  /* Subtle orange border at bottom */
+  border-bottom: 1px solid rgba(255, 165, 0, 0.15);
+  /* Above all page content */
+  z-index: 1000;
 }
-.glitch-active{
-  animation:glitchPage 0.6s forwards;
+
+/* SVG Sun/Moon Toggle Button - positioned far left */
+.mode-toggle {
+  /* Square container for circular button */
+  width: 52px;
+  height: 52px;
+  /* Creates perfect circle */
+  border-radius: 50%;
+  /* Semi-transparent orange background */
+  background: rgba(255, 165, 0, 0.22);
+  /* Orange border around button */
+  border: 2px solid #ffa500;
+  /* Pointer cursor indicates clickability */
+  cursor: pointer;
+  /* Required for absolute positioning of SVG inside */
+  position: relative;
+  /* Hides SVG overflow when rotating */
+  overflow: hidden;
+  /* Smooth animation for all property changes */
+  transition: all 0.5s ease;
+  /* order: -1 places button first (far left) */
+  order: -1;
+  /* Glowing shadow effect */
+  box-shadow: 0 0 15px rgba(255,165,0,0.3);
 }
-@keyframes glitchPage{
-  0%{opacity:0; transform:scale(1);}
-  30%{opacity:1; transform:scale(1.05) rotate(1deg);}
-  60%{transform:scale(0.98) rotate(-1deg);}
-  100%{opacity:1; transform:scale(1);}
+
+/* Hover state - enlarge and increase glow */
+.mode-toggle:hover {
+  /* 110% size */
+  transform: scale(1.1);
+  /* Brighter glow */
+  box-shadow: 0 0 25px rgba(255,165,0,0.5);
+}
+
+/* SVG icon positioning inside toggle button */
+.mode-toggle svg {
+  /* Icon size */
+  width: 32px;
+  height: 32px;
+  /* Positioned absolutely over button */
+  position: absolute;
+  /* Center on button */
+  top: 50%;
+  left: 50%;
+  /* translate to actual center (not top-left) */
+  transform: translate(-50%, -50%);
+  /* Smooth fade and rotation transitions */
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Sun icon - visible in dark mode (default) */
+.sun-icon {
+  /* Fully visible */
+  opacity: 1;
+  /* Orange color */
+  fill: #ffa500;
+}
+/* Sun hidden in light mode (fade out + rotate + shrink) */
+body.light .sun-icon {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(180deg) scale(0.7);
+}
+
+/* Moon icon - hidden in dark mode */
+.moon-icon {
+  /* Fully hidden by default */
+  opacity: 0;
+  /* Dark color for light mode background */
+  fill: #111;
+}
+/* Moon visible in light mode (fade in, no rotation, normal size) */
+body.light .moon-icon {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+}
+
+/* Logo sizing */
+header img.logo {
+  /* Logo height respects aspect ratio */
+  height: 40px;
+  /* Width adjusts automatically */
+  width: auto;
+  /* No filter applied (can add grayscale etc. if needed) */
+  filter: none;
+}
+
+/* Navigation menu layout */
+nav {
+  /* Horizontal layout for links */
+  display: flex;
+  /* Vertically center nav items */
+  align-items: center;
+}
+
+/* Individual navigation links */
+nav a {
+  /* Space between nav items (2rem = 32px) */
+  margin-left: 2rem;
+  /* Remove underline from links */
+  text-decoration: none;
+  /* Light gray color */
+  color: #ccc;
+  /* Bolder text weight */
+  font-weight: 600;
+  /* 1rem = 16px */
+  font-size: 1rem;
+  /* Used for potential hover underline effect (currently unused) */
+  position: relative;
+}
+
+/* Hamburger menu (hidden on desktop, shown on mobile) */
+.hamburger {
+  /* Hidden by default */
+  display: none;
+  /* Stack lines vertically */
+  flex-direction: column;
+  /* Space between burger lines */
+  gap: 5px;
+  /* Pointer cursor shows it's clickable */
+  cursor: pointer;
+}
+
+/* Individual burger lines */
+.hamburger span {
+  /* Width of hamburger line */
+  width: 30px;
+  /* Height/thickness of burger line */
+  height: 4px;
+  /* White color */
+  background: #fff;
+  /* Slightly rounded line ends */
+  border-radius: 2px;
 }
 
 /* =========================
-   RESPONSIVE HERO TEXT
+  HERO SECTION
+  Full-screen video background with centered text
 ========================= */
-@media(max-width:1000px){
-  #heroText{font-size:2.2rem;}
-  #heroSubtitle{font-size:16px; max-width:80%;}
-}
-@media(max-width:600px){
-  #heroText{font-size:1.6rem;}
-  #heroSubtitle{font-size:14px; max-width:90%;}
-}
-
-
-/* LOGO FIX */
-.logo{
-  height:40px;
-  width:auto;
-  display:block;
-}
-
-/* HERO CONTENT LAYER */
-.hero-content{
-  position:relative;
-  z-index:15;
-  text-align:center;
+.hero {
+  /* Enable positioning context for absolute children */
+  position: relative;
+  /* Full viewport height */
+  height: 100vh;
+  /* Center content vertically and horizontally */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* Center-align text */
+  text-align: center;
+  /* Hide content that extends beyond hero */
+  overflow: hidden;
 }
 
-/* STAR CANVAS */
-#starCanvas{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  z-index:5;
-  pointer-events:none;
+/* Background video styling */
+.hero video.scene {
+  /* Positioned behind text */
+  position: absolute;
+  /* inset: 0 covers full hero area */
+  inset: 0;
+  /* Video fills container */
+  width: 100%;
+  height: 100%;
+  /* Cover entire area, may crop video */
+  object-fit: cover;
+  /* Start invisible, fade in when active */
+  opacity: 0;
+  /* Smooth fade transition (1.5 seconds) */
+  transition: opacity 1.5s ease-in-out;
+  /* Behind all text content */
+  z-index: -2;
 }
 
-/* VIDEO BEHIND EVERYTHING */
-.hero video{
-  z-index:-2;
+/* Active video class - make visible */
+.hero video.scene.active {
+  /* Fully visible */
+  opacity: 1;
 }
 
-
-/* TEXT ABOVE EVERYTHING */
-#heroText, #heroSubtitle{
-  z-index:20;
-  position:relative;
+/* Hero title text */
+#heroText {
+  /* Responsive size: min 3rem, preferred 8vw, max 6rem */
+  font-size: clamp(3rem, 8vw, 6rem);
+  /* Extra bold for impact */
+  font-weight: 900;
+  /* Tighter letter spacing */
+  letter-spacing: -0.03em;
+  /* White text */
+  color: #fff;
 }
 
-
-@keyframes fadeIn{
-  from{
-    opacity:0;
-    transform:translateY(20px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-} 
-
-/* GLASS */
-.glass, .card, header{
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(20px);
-  border:1px solid rgba(255,255,255,0.1);
+/* Hero subtitle text */
+#heroSubtitle {
+  /* Space above subtitle */
+  margin-top: 1rem;
+  /* Responsive size: min 1.2rem, preferred 3.5vw, max 1.8rem */
+  font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+  /* Slightly transparent white */
+  color: rgba(255, 255, 255, 0.85);
 }
 
-/* HEADER */
-header{ border-radius:0 !important; }
-
-/* TOGGLE */
-.mode-toggle{
-  width:50px;height:26px;
-  border-radius:20px;
-  background:rgba(255,255,255,0.2);
-  position:relative;cursor:pointer;
-}
-.mode-toggle::after{
-  content:'';position:absolute;
-  width:22px;height:22px;
-  background:#fff;border-radius:50%;
-  top:2px;left:2px;
-  transition:0.3s;
-}
-body.light .mode-toggle::after{
-  transform:translateX(24px);
+/* DVD/Bouncing Logo */
+.dvd-logo {
+  /* Positioned over video */
+  position: absolute;
+  /* Above video, below text */
+  z-index: 8;
+  /* Doesn't interfere with clicks */
+  pointer-events: none;
+  /* Slightly rounded corners */
+  border-radius: 8px;
+  /* Logo dimensions */
+  width: 120px;
+  height: 60px;
+  /* Glowing orange shadow */
+  filter: drop-shadow(0 0 15px #ffa500);
+  /* Smooth glow transitions */
+  transition: filter 0.4s ease;
 }
 
-
-/* HAMBURGER */
-.hamburger{display:none;flex-direction:column;gap:5px;}
-.hamburger span{width:25px;height:3px;background:#fff;}
-
-@media(max-width:768px){
-  nav{
-    position:absolute;
-    top:80px;right:0;
-    flex-direction:column;
-    transform:translateX(100%);
-    background:rgba(0,0,0,0.6);
-    backdrop-filter:blur(20px);
-  }
-  nav.active{transform:translateX(0);}
-  .hamburger{display:flex;}
-}
-
-/* FOOTER */
-.footer{text-align:center;padding:40px;}
-.socials{display:flex;justify-content:center;gap:20px;}
-.socials a{
-  width:55px;height:55px;
-  display:flex;align-items:center;justify-content:center;
-  backdrop-filter:blur(15px);
-  background:rgba(255,255,255,0.1);
-}
-
-/* ICONS */
-.ig,.tiktok,.email{
-  width:20px;height:20px;background:white;
-}
-.ig{
-  mask:url('https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg') no-repeat center;
-  -webkit-mask:url('https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg') no-repeat center;
-}
-.tiktok{
-  mask:url('https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/tiktok.svg') no-repeat center;
-  -webkit-mask:url('https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/tiktok.svg') no-repeat center;
-}
-.email{
-  mask:url('https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/gmail.svg') no-repeat center;
-  -webkit-mask:url('https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/gmail.svg') no-repeat center;
-}
-
-/* ABOUT */
-.about{
-  margin:80px auto;
-  padding:40px;
-  max-width:700px;
-  text-align:center;
+/* Star field canvas (animated background) */
+#starCanvas {
+  /* Fixed to viewport */
+  position: fixed;
+  /* Covers entire screen */
+  inset: 0;
+  /* Behind all content */
+  z-index: -1;
+  /* Doesn't block clicks */
+  pointer-events: none;
 }
 
 /* =========================
-   GLITCH TEXT EFFECT
+  CATEGORY GRID - Card-based layout
+  Multiple cards in responsive grid, hover effects
 ========================= */
-.glitch{
-  position:relative;
-  display:inline-block;
+.grid {
+  /* CSS Grid for responsive layout */
+  display: grid;
+  /* Auto-fill columns: each 280px+ minimum, fills available space */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  /* Space between cards */
+  gap: 1.8rem;
+  /* Padding around grid: 100px top (below header), 5% sides, 80px bottom */
+  padding: 100px 5% 80px;
+  /* Prevent grid from exceeding 1600px width */
+  max-width: 1600px;
+  /* Center grid on page */
+  margin: 0 auto;
 }
 
-.glitch::before,
-.glitch::after{
-  content:attr(data-text);
-  position:absolute;
-  left:0;
-  width:100%;
-  opacity:0.7;
+/* Individual card styling */
+.card {
+  /* Enable absolute positioning for content overlay */
+  position: relative;
+  /* Hide content that extends beyond card */
+  overflow: hidden;
+  /* Round corners (28px = significant curve) */
+  border-radius: 28px;
+  /* Semi-transparent white background */
+  background: rgba(255, 255, 255, 0.05);
+  /* Frosted glass effect */
+  backdrop-filter: blur(12px);
+  /* Subtle orange border */
+  border: 1px solid rgba(255, 165, 0, 0.18);
+  /* Smooth animation on hover */
+  transition: all 0.4s ease;
+  /* CRITICAL: Forces perfect square (1:1 aspect ratio) */
+  aspect-ratio: 1 / 1;
+  /* Fill grid cell width */
+  width: 100%;
+  /* Height auto-adjusts to maintain square */
+  height: auto;
+  /* Shadow for depth */
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
 }
 
-.glitch::before{
-  color:#ff00ff;
-  animation:glitchTop 1s infinite;
+/* Card hover state - enlarge and add glow */
+.card:hover {
+  /* 105% size + 1 degree rotation for subtle tilt */
+  transform: scale(1.05) rotate(1deg);
+  /* More intense shadow + orange glow */
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 30px rgba(255,165,0,0.25);
 }
 
-.glitch::after{
-  color:#00ffff;
-  animation:glitchBottom 1s infinite;
+/* Card background image */
+.variant-img {
+  /* Cover entire card */
+  position: absolute;
+  inset: 0;
+  /* Fill card dimensions */
+  width: 100%;
+  height: 100%;
+  /* Fill card without distortion */
+  object-fit: cover;
+  /* Smooth fade transition (for variant changes) */
+  transition: opacity 0.5s ease;
 }
 
-@keyframes glitchTop{
-  0%{transform:translate(0);}
-  50%{transform:translate(-2px,-2px);}
-  100%{transform:translate(0);}
-}
-
-@keyframes glitchBottom{
-  0%{transform:translate(0);}
-  50%{transform:translate(2px,2px);}
-  100%{transform:translate(0);}
+/* Card title label */
+.card .name {
+  /* Positioned at bottom center */
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  /* Center label horizontally */
+  transform: translateX(-50%);
+  /* Text size */
+  font-size: 1.3rem;
+  /* Semi-transparent dark background for text readability */
+  background: rgba(0,0,0,0.65);
+  /* Blur background behind text */
+  backdrop-filter: blur(10px);
+  /* Internal spacing */
+  padding: 0.4rem 1.2rem;
+  /* Pill-shaped (fully rounded) */
+  border-radius: 50px;
+  /* Orange text */
+  color: #ffa500;
+  /* Above image */
+  z-index: 10;
+  /* Graffiti/street-art font for character */
+  font-family: 'Permanent Marker', cursive;
 }
 
 /* =========================
-   SCROLL REVEAL
+  FOOTER - Floating pill-shaped container
 ========================= */
-.reveal{
-  opacity:0;
-  transform:translateY(40px);
-  transition:0.8s ease;
+.footer {
+  /* Internal spacing */
+  padding: 1.5rem 5% 2rem;
+  /* Semi-transparent dark background */
+  background: rgba(30, 10, 10, 0.4);
+  /* Subtle blur effect */
+  backdrop-filter: blur(12px);
+  /* Rounded top like pill/capsule shape (bottom corners sharp) */
+  border-radius: 999px 999px 0 0;
+  /* Space above footer */
+  margin: 4rem auto 0;
+  /* Only as wide as content needs */
+  width: fit-content;
+  /* Minimum width for small screens */
+  min-width: 220px;
+  /* Don't exceed 90% of screen width */
+  max-width: 90%;
+  /* Shadow for floating effect */
+  box-shadow: 0 -8px 30px rgba(222, 92, 12, 0.759);
+  /* Enable positioning context */
+  position: relative;
+  /* Above main content */
+  z-index: 2;
 }
 
-.reveal.active{
-  opacity:1;
-  transform:translateY(0);
+/* Social links container */
+.socials {
+  /* Horizontal layout */
+  display: flex;
+  /* Center icons */
+  justify-content: center;
+  /* Space between social buttons */
+  gap: 1.4rem;
+  /* Reset margin */
+  margin: 0;
+}
+
+/* Individual social link buttons */
+.socials a {
+  /* Square dimensions */
+  width: 42px;
+  height: 42px;
+  /* Semi-transparent orange background */
+  background: rgba(255,165,0,0.18);
+  /* Circular buttons */
+  border-radius: 50%;
+  /* Subtle orange border */
+  border: 1px solid rgba(255,165,0,0.25);
+  /* Smooth color and scale transitions */
+  transition: all 0.3s ease;
+  /* Center icon inside button */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Social button hover - enlarge and brighten */
+.socials a:hover {
+  /* 120% size */
+  transform: scale(1.2);
+  /* Brighter orange background */
+  background: rgba(255,165,0,0.5);
+}
+
+/* Social media icon styling (Instagram, TikTok, Email) */
+.ig, .tiktok, .email {
+  /* Icon dimensions */
+  width: 28px;
+  height: 28px;
+  /* Fallback color if SVG mask fails to load */
+  background-color: #ffa500;
+  /* Use SVG as mask/stencil (need mask-image property) */
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  /* Webkit prefix for Safari/Chrome */
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  /* Smooth color transition on hover */
+  transition: background-color 0.3s;
+}
+
+/* Social icons change to white on hover */
+.socials a:hover .ig,
+.socials a:hover .tiktok,
+.socials a:hover .email {
+  background-color: #fff;
+}
+
+/* Instagram icon - loaded from CDN */
+.ig {
+  /* SVG mask from simple-icons library */
+  mask-image: url('https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/instagram.svg');
+  -webkit-mask-image: url('https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/instagram.svg');
+}
+
+/* TikTok icon - loaded from CDN */
+.tiktok {
+  mask-image: url('https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/tiktok.svg');
+  -webkit-mask-image: url('https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/tiktok.svg');
+}
+
+/* Gmail icon - loaded from CDN */
+.email {
+  mask-image: url('https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/gmail.svg');
+  -webkit-mask-image: url('https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/gmail.svg');
 }
 
 /* =========================
-   MAGNETIC HOVER
+  CUSTOM CURSOR - Glowing circular cursor
 ========================= */
+.cursor {
+  /* Fixed to mouse position (JS controlled) */
+  position: fixed;
+  /* Circular cursor dimensions */
+  width: 18px;
+  height: 18px;
+  /* Perfect circle */
+  border-radius: 50%;
+  /* Doesn't interfere with clicks */
+  pointer-events: none;
+  /* Inverts colors of content behind cursor */
+  mix-blend-mode: difference;
+  /* Above all other content */
+  z-index: 9999;
+  /* Smooth animations: position, color, glow */
+  transition: transform 0.1s linear, background 0.4s, box-shadow 0.4s;
+}
 
-/* =========================
-   HERO PARALLAX
-========================= */
-.hero{
-  perspective:1000px;
+/* Cursor in dark mode - white glow */
+body:not(.light) .cursor {
+  /* White background */
+  background: #fff;
+  /* White outer glow + secondary glow */
+  box-shadow: 0 0 12px #fff, 0 0 20px rgba(255,255,255,0.6);
+}
+
+/* Cursor in light mode - orange glow */
+body.light .cursor {
+  /* Orange background */
+  background: #ffa500;
+  /* Orange outer glow + secondary glow */
+  box-shadow: 0 0 15px #ffa500, 0 0 25px rgba(255,165,0,0.7);
 }
 
 /* =========================
-   STRONGER CARD HOVER
-========================= */
-.card:hover{
-  transform: translateY(-10px) scale(1.03) rotateX(2deg);
-  box-shadow:
-    0 0 30px rgba(255,255,255,0.3),
-    0 0 60px rgba(255,0,255,0.2),
-    0 0 80px rgba(0,255,255,0.2);
-}
-/* =========================
-   LIGHT MODE STYLING
-   (Background & Cursor)
+  LIGHT MODE THEME
+  Overrides for bright/daytime aesthetic
 ========================= */
 body.light {
-  /* Light mode background: radial gradient from white to light gray */
-  background: radial-gradient(circle, #00aaff, #00b3ff);
-  /* Light mode text color */
+  /* Gradient background: sky blue to light cyan */
+  background: linear-gradient(135deg, #87CEEB 0%, #E0F7FA 100%);
+  /* Dark text for contrast on light background */
   color: #111;
 }
 
-/* Custom cursor color for light mode */
-body.light .cursor {
-  background: #ff4800; /* Sky blue cursor */
-  box-shadow: 
-    0 0 10px rgba(221, 100, 20, 0.5),
-    0 0 20px rgba(255, 128, 0, 0.3),
-    0 0 30px rgba(255, 140, 0, 0.2);
-}
-/* =========================
-   LIGHT MODE GLASS SHADE
-========================= */
-body.light .glass,
+/* Light mode overrides for header, cards, footer */
+body.light header,
 body.light .card,
-body.light header {
-  /* Lighter glass shade for light mode */
-  background: rgba(255, 255, 255, 0.741); /* adjust opacity for strength */
-  border: 1px solid rgba(255, 255, 255, 0.679); /* lighter border for visibility */
-  backdrop-filter: blur(20px); /* keep the blur effect */
-}
-/* =========================
-  IMAGE OPTIMIZATION
-========================= */
-.card img {
-  width: 100%;
-  border-radius: 10px;
-  transition: 0.4s;
-  display: block;
-  box-shadow: 0 0 20px rgba(255,255,255,0.2);
-  /* Optimize image loading */
-  content-visibility: auto;
-  object-fit: cover;
-  aspect-ratio: 1;
+body.light .footer {
+  /* Brighter semi-transparent white background */
+  background: rgba(255, 255, 255, 0.25);
+  /* Light blue border (matches sky theme) */
+  border-color: rgba(135,206,235,0.3);
 }
 
-/* Reduce animation on mobile for better performance */
-@media(max-width:600px) {
-  .card img {
-   content-visibility: auto;
+/* =========================
+  MOBILE RESPONSIVE
+  Stacked layout for screens ≤768px wide
+========================= */
+@media (max-width: 768px) {
+  /* Header adjustments for mobile */
+  header {
+   /* Reduced padding for mobile */
+   padding: 1rem 4%;
+   /* Allow items to wrap to multiple lines */
+   flex-wrap: wrap;
   }
-  
-  .card:hover::after {
-   animation: none; /* Disable glow animation on mobile */
+
+  /* Logo container positioning */
+  .logo-container {
+   /* Display in normal order (center) */
+   order: 0;
+  }
+
+  /* Toggle positioning */
+  .mode-toggle {
+   /* Display first (far left) */
+   order: -1;
+  }
+
+  /* Navigation positioning */
+  nav {
+   /* Display last (below header items) */
+   order: 3;
+   /* Take full width on mobile */
+   width: 100%;
+   /* Space above nav */
+   margin-top: 1rem;
+   /* Center nav items */
+   justify-content: center;
+  }
+
+  /* Show hamburger menu on mobile */
+  .hamburger {
+   display: flex;
+   /* Display between toggle and logo */
+   order: 2;
+  }
+
+  /* Navigation link spacing on mobile */
+  nav a {
+   /* Reduce spacing between links */
+   margin: 0.5rem 1rem;
+  }
+
+  /* Footer spacing on mobile */
+  .footer {
+   /* Smaller top margin on mobile */
+   margin: 3rem auto 0;
   }
 }

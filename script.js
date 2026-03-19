@@ -1,4 +1,3 @@
-
 /* =========================
    CUSTOM CURSOR
 ========================= */
@@ -15,7 +14,7 @@ window.addEventListener('touchmove', (e)=>{
 });
 
 /* =========================
-   DVD LOGO BOUNCE
+   DVD LOGO BOUNCE (only on index)
 ========================= */
 const dvd = document.querySelector('.dvd-logo');
 if(dvd){
@@ -50,7 +49,7 @@ if(dvd){
 }
 
 /* =========================
-   HERO VIDEO SWITCH & TEXT
+   HERO VIDEO SWITCH & TEXT (only on index)
 ========================= */
 const scenes = document.querySelectorAll('.hero video.scene');
 let currentScene = 0;
@@ -80,7 +79,7 @@ if(scenes.length>0){
 }
 
 /* =========================
-   STAR BACKGROUND
+   STAR BACKGROUND (on all pages if canvas exists)
 ========================= */
 const starCanvas = document.getElementById("starCanvas");
 if(starCanvas){
@@ -124,25 +123,17 @@ if(starCanvas){
 }
 
 /* =========================
-   SUN/THEME TOGGLE
+   SUN/MOON THEME TOGGLE - applies globally to all pages
 ========================= */
-// Connects to your CSS body.light
 const modeToggle = document.getElementById('modeToggle');
 if(modeToggle){
   modeToggle.addEventListener('click', ()=>{
     document.body.classList.toggle('light');
-
-    // Optional: change cursor dynamically (CSS handles this too)
-    if(document.body.classList.contains('light')){
-      cursor.style.background = '#ff6600'; // Light mode cursor
-    } else {
-      cursor.style.background = '#fff';    // Dark mode cursor
-    }
   });
 }
 
 /* =========================
-   MORPHING IMAGES
+   MORPHING IMAGES - works with any number of images per card
 ========================= */
 const morphCards = document.querySelectorAll('.morph-target');
 morphCards.forEach(card=>{
@@ -153,11 +144,7 @@ morphCards.forEach(card=>{
       imgs[index].style.display='none';
       index=(index+1)%imgs.length;
       imgs[index].style.display='block';
-      // Lazy load the image when visible
-      if(imgs[index].dataset.src && !imgs[index].src) {
-        imgs[index].src = imgs[index].dataset.src;
-      }
-    },1000);
+    },1000); // change 1000 to slower/faster cycling (in ms)
   });
   card.addEventListener('mouseleave',()=>{
     clearInterval(card.morphInterval);
@@ -175,7 +162,7 @@ if(hamburger){
 }
 
 /* =========================
-   SCROLL REVEAL
+   SCROLL REVEAL (if you use .reveal class anywhere)
 ========================= */
 const reveals = document.querySelectorAll('.reveal');
 function revealOnScroll(){
@@ -188,7 +175,7 @@ function revealOnScroll(){
 window.addEventListener('scroll', revealOnScroll);
 
 /* =========================
-   MAGNETIC HOVER EFFECT
+   MAGNETIC HOVER EFFECT ON CARDS
 ========================= */
 document.querySelectorAll('.card').forEach(card=>{
   card.addEventListener('mousemove', (e)=>{
@@ -198,32 +185,4 @@ document.querySelectorAll('.card').forEach(card=>{
     card.style.transform = `translate(${x*0.1}px, ${y*0.1}px) scale(1.03)`;
   });
   card.addEventListener('mouseleave', ()=>{ card.style.transform = ''; });
-});
-
-/* =========================
-   HERO PARALLAX
-========================= */
-const hero = document.querySelector('.hero');
-if(hero){
-  hero.addEventListener('mousemove', (e)=>{
-    const x = (e.clientX / window.innerWidth - 0.5) * 20;
-    const y = (e.clientY / window.innerHeight - 0.5) * 20;
-    hero.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
-  });
-}
-
-/* =========================
-  IMAGE LAZY LOADING
-========================= */
-const imageObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-   if (entry.isIntersecting) {
-    const img = entry.target;
-    img.src = img.dataset.src;
-    img.classList.add('loaded');
-    observer.unobserve(img);
-   }
-  });
-}, { rootMargin: '50px' });
-
-document.querySelectorAll('img[data-src]').forEach(img => imageObserver.observe(img));
+})

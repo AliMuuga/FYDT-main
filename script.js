@@ -63,7 +63,7 @@ if(scenes.length>0){
   const heroText = document.getElementById('heroText');
   const subtitle = document.getElementById('heroSubtitle');
   if(heroText && subtitle){
-    const phrases = ["Welcome to FYDT","Luxury Streetwear Reimagined","Gritty Urban Meets Futuristic AI","Join the FYDT Universe"];
+    const phrases = ["Welcome to FYDT","Sorry for ruing your picture","It's about ART","Join the FYDT Universe"];
     let phraseIndex=0;
     setInterval(()=>{
       heroText.style.opacity=0;

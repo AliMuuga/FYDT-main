@@ -152,17 +152,6 @@ morphCards.forEach(card=>{
   });
 });
 
-/* =========================
-   HAMBURGER MENU
-========================= */
-const hamburger = document.getElementById('hamburger');
-const nav = document.getElementById('mainNav');
-
-if (hamburger && nav) {
-  hamburger.addEventListener('click', () => {
-    nav.classList.toggle('active');
-  });
-}
 
 /* =========================
    SCROLL REVEAL (if you use .reveal class anywhere)

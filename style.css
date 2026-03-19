@@ -473,3 +473,33 @@ body.light{
     0 0 60px rgba(255,0,255,0.2),
     0 0 80px rgba(0,255,255,0.2);
 }
+/* =========================
+   LIGHT MODE STYLING
+   (Background & Cursor)
+========================= */
+body.light {
+  /* Light mode background: radial gradient from white to light gray */
+  background: radial-gradient(circle, #00aaff, #00b3ff);
+  /* Light mode text color */
+  color: #111;
+}
+
+/* Custom cursor color for light mode */
+body.light .cursor {
+  background: #ff4800; /* Sky blue cursor */
+  box-shadow: 
+    0 0 10px rgba(221, 100, 20, 0.5),
+    0 0 20px rgba(255, 128, 0, 0.3),
+    0 0 30px rgba(255, 140, 0, 0.2);
+}
+/* =========================
+   LIGHT MODE GLASS SHADE
+========================= */
+body.light .glass,
+body.light .card,
+body.light header {
+  /* Lighter glass shade for light mode */
+  background: rgba(255, 255, 255, 0.741); /* adjust opacity for strength */
+  border: 1px solid rgba(255, 255, 255, 0.679); /* lighter border for visibility */
+  backdrop-filter: blur(20px); /* keep the blur effect */
+}

@@ -324,29 +324,8 @@ nav a {
   position: relative;
 }
 
-/* Hamburger menu (hidden on desktop, shown on mobile) */
-.hamburger {
-  /* Hidden by default */
-  display: none;
-  /* Stack lines vertically */
-  flex-direction: column;
-  /* Space between burger lines */
-  gap: 5px;
-  /* Pointer cursor shows it's clickable */
-  cursor: pointer;
-}
 
-/* Individual burger lines */
-.hamburger span {
-  /* Width of hamburger line */
-  width: 30px;
-  /* Height/thickness of burger line */
-  height: 4px;
-  /* White color */
-  background: #fff;
-  /* Slightly rounded line ends */
-  border-radius: 2px;
-}
+
 
 /* =========================
   HERO SECTION

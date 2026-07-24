@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
       cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
     }, { passive: true });
 
-    // Event Delegation for hover effects to handle dynamically added cards
+    // Event Delegation for hover effects
     document.addEventListener('mouseover', (e) => {
       const target = e.target.closest('a, button, .poster-card, .art-card, .fashion-card, .artwork-card, .project-card, .collection-card, .card');
       if (target) {
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
      04. MAGNETIC BUTTON INTERACTION
      -------------------------------------------------------------------------- */
   if (window.matchMedia('(pointer: fine)').matches) {
-    const magneticBtns = document.querySelectorAll('.btn, .brand-logo, .cart-trigger-btn, .art-modal-close');
+    const magneticBtns = document.querySelectorAll('.btn, .brand, .brand-logo, .cart-trigger-btn, .art-modal-close, .menu-toggle');
 
     magneticBtns.forEach((btn) => {
       btn.addEventListener('mousemove', (e) => {
@@ -335,24 +335,27 @@ document.addEventListener('DOMContentLoaded', () => {
       modal = document.createElement('div');
       modal.className = 'art-modal';
       modal.id = 'artModal';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.setAttribute('aria-hidden', 'true');
       modal.innerHTML = `
         <div class="art-modal-container">
-          <button class="art-modal-close" aria-label="Close modal">Close</button>
+          <button class="art-modal-close" aria-label="Close modal">&times;</button>
           <div class="art-modal-stage">
             <button class="modal-nav prev" aria-label="Previous image">&larr;</button>
-            <img src="" alt="Gallery Display">
+            <img src="" alt="Gallery Display" id="modalImage">
             <button class="modal-nav next" aria-label="Next image">&rarr;</button>
           </div>
           <div class="art-modal-sidebar">
             <div class="modal-meta-header">
-              <h2 class="modal-title"></h2>
               <span class="category-tag"></span>
+              <h2 class="modal-title" id="modalTitle"></h2>
             </div>
             <div class="modal-meta-body">
               <p class="modal-description"></p>
             </div>
             <div class="version-section">
-              <span class="version-section-title">Versions / Angles</span>
+              <span class="version-section-title">Versions / Views</span>
               <div class="version-thumbnails"></div>
             </div>
           </div>
@@ -369,16 +372,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const versionContainer = modal.querySelector('.version-thumbnails');
     const prevBtn = modal.querySelector('.modal-nav.prev');
     const nextBtn = modal.querySelector('.modal-nav.next');
+    const modalStage = modal.querySelector('.art-modal-stage');
 
     let currentVariants = [];
     let currentIndex = 0;
+    let touchStartX = 0;
+    let touchEndX = 0;
 
     function parseVariants(cardEl, primaryImg) {
       // 1. Check for nested image elements (.variant-img)
       const nestedImgs = Array.from(cardEl.querySelectorAll('.variant-img')).map(i => i.src);
       if (nestedImgs.length > 0) return nestedImgs;
 
-      // 2. Check for data-versions or data-variants attributes across card and primary image
+      // 2. Check for data-versions or data-variants attributes
       const raw = cardEl?.dataset.versions || 
                   cardEl?.dataset.variants || 
                   cardEl?.getAttribute('data-versions') || 
@@ -423,8 +429,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function openModal(card, primaryImg) {
-      const title = card.getAttribute('data-title') || card.querySelector('h2, h3')?.textContent || 'Untitled Artwork';
-      const category = card.getAttribute('data-category') || card.querySelector('span, .eyebrow')?.textContent || 'Gallery Exhibition';
+      const title = card.getAttribute('data-title') || card.querySelector('h2, h3')?.textContent || 'Untitled Garment';
+      const category = card.getAttribute('data-category') || card.querySelector('span, .eyebrow')?.textContent || 'Exhibition — Fashion';
       const description = card.getAttribute('data-description') || card.querySelector('p')?.textContent || '';
 
       currentVariants = parseVariants(card, primaryImg);
@@ -443,7 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
           currentVariants.forEach((src, i) => {
             const thumb = document.createElement('img');
             thumb.src = src;
-            thumb.alt = `Variant ${i + 1}`;
+            thumb.alt = `View ${i + 1}`;
             if (i === 0) thumb.classList.add('active');
             thumb.addEventListener('click', () => showIndex(i));
             versionContainer.appendChild(thumb);
@@ -459,6 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       showIndex(0);
       modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
 
       if (lenis) {
         lenis.stop();
@@ -469,6 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function closeModal() {
       modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
 
       if (lenis) {
         lenis.start();
@@ -500,6 +508,26 @@ document.addEventListener('DOMContentLoaded', () => {
       showIndex(currentIndex + 1);
     });
 
+    // Touch Swiping for Mobile Lightbox Navigation
+    modalStage?.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    modalStage?.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      if (touchEndX < touchStartX - swipeThreshold) {
+        showIndex(currentIndex + 1); // Swipe left -> next
+      }
+      if (touchEndX > touchStartX + swipeThreshold) {
+        showIndex(currentIndex - 1); // Swipe right -> prev
+      }
+    }
+
     // Close when clicking outside of artwork container
     modal.addEventListener('click', (e) => {
       if (e.target === modal || e.target.classList.contains('art-modal-stage')) {
@@ -518,8 +546,13 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 });
 
-if ('serviceWorker' in navigator) {
+/* --------------------------------------------------------------------------
+   13. SERVICE WORKER REGISTRATION
+   -------------------------------------------------------------------------- */
+if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js');
+    navigator.serviceWorker.register('/sw.js').catch((err) => {
+      console.warn('Service Worker registration skipped or failed:', err);
+    });
   });
 }

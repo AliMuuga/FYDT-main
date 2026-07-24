@@ -1326,16 +1326,19 @@ body.loaded .site-header {
     top: 0;
     left: -100%; /* Off-screen to the left */
     bottom: 0;
-    width: 80%;
+    width: 85%;
     max-width: 320px;
     height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile browsers */
     background: #040914; /* Pure dark backdrop for optimal mobile decoding performance */
     border-right: 1px solid var(--border-accent);
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 3rem 2rem;
-    gap: 1.8rem;
+    justify-content: flex-start; /* Keeps nav items aligned from top */
+    align-items: stretch;
+    padding: 6rem 2rem 3rem 2rem; /* Clears top mobile header bar */
+    gap: 1.2rem;
+    overflow-y: auto; /* Allows scrolling inside the drawer if links overflow */
+    -webkit-overflow-scrolling: touch;
     transform: none;
     transition: left 0.4s var(--ease-out-expo);
     box-shadow: 10px 0 30px rgba(0, 0, 0, 0.8);
@@ -1348,11 +1351,21 @@ body.loaded .site-header {
     left: 0;
   }
 
-  .site-nav a {
-    font-size: 1.1rem;
+  /* Explicit formatting for all links and buttons inside site-nav */
+  .site-nav a,
+  .site-nav button,
+  .site-nav .btn {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: 1.05rem;
     width: 100%;
-    padding: 0.6rem 0;
+    padding: 0.8rem 0;
     border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-main);
+    text-align: left;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .site-nav a::after {

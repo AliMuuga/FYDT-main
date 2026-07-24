@@ -378,8 +378,8 @@ body.loaded .site-header {
   display: none;
   flex-direction: column;
   justify-content: space-between;
-  width: 26px;
-  height: 18px;
+  width: 28px;
+  height: 20px;
   background: transparent;
   padding: 0;
   z-index: 1001;
@@ -394,13 +394,38 @@ body.loaded .site-header {
 
 /* Active hamburger icon state */
 .menu-toggle.active span:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
+  transform: translateY(9px) rotate(45deg);
 }
 .menu-toggle.active span:nth-child(2) {
   opacity: 0;
 }
 .menu-toggle.active span:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Mobile Nav Overlay Backdrop */
+.nav-backdrop {
+  display: none;
+}
+
+@media (max-width: 850px) {
+  .nav-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 16, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+
+  body.nav-open .nav-backdrop {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -816,7 +841,11 @@ body.loaded .site-header {
   background: rgba(4, 9, 20, 0.85);
   border: 1px solid var(--border-subtle);
   color: var(--text-main);
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.1rem;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-display);
   font-size: 0.68rem;
   font-weight: 700;
@@ -865,8 +894,8 @@ body.loaded .site-header {
   background: rgba(6, 14, 28, 0.75);
   border: 1px solid var(--border-subtle);
   color: #ffffff;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   display: grid;
   place-items: center;
   cursor: pointer;
@@ -972,6 +1001,8 @@ body.loaded .site-header {
   gap: 0.8rem;
   overflow-x: auto;
   padding-bottom: 0.4rem;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Custom Webkit Scrollbar for Thumbnails */
@@ -1003,6 +1034,7 @@ body.loaded .site-header {
   background: #02050c !important;
   padding: 0 !important;
   transition: all 0.25s ease;
+  scroll-snap-align: start;
 }
 
 .version-thumbnails img.active,
@@ -1197,7 +1229,7 @@ body.loaded .site-header {
 }
 
 /* --------------------------------------------------------------------------
-   12. RESPONSIVE BREAKPOINTS
+   12. RESPONSIVE BREAKPOINTS & MOBILE FIXES
    -------------------------------------------------------------------------- */
 @media (max-width: 1200px) {
   .poster-grid,
@@ -1212,10 +1244,11 @@ body.loaded .site-header {
 }
 
 @media (max-width: 900px) {
+  /* Modal Mobile Overflow & Padding Fix */
   .art-modal,
   #artModal {
     align-items: flex-start;
-    padding: 1rem;
+    padding: 1rem 1rem 3.5rem 1rem; /* Added bottom padding for mobile browsers */
     overflow-y: auto;
   }
 
@@ -1223,7 +1256,7 @@ body.loaded .site-header {
     grid-template-columns: 1fr;
     height: auto;
     max-height: none;
-    margin: auto 0;
+    margin: auto 0 2rem 0;
     overflow: visible;
   }
 
@@ -1265,12 +1298,26 @@ body.loaded .site-header {
     left: 0;
     right: 0;
     width: 100%;
-    padding: 1rem 1.5rem;
+    padding: 0.8rem 1.2rem;
     border-radius: 0;
     border-left: none;
     border-right: none;
     border-top: none;
     background: rgba(4, 9, 20, 0.95);
+  }
+
+  /* Scale Header Logo & Brand Text to prevent collision */
+  .brand {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+  }
+
+  .nav-logo {
+    padding: 0.25rem 0.6rem;
+  }
+
+  .nav-logo img {
+    height: 1.4rem;
   }
 
   /* Mobile Off-Screen Left-Sliding Menu Drawer */
@@ -1289,7 +1336,7 @@ body.loaded .site-header {
     align-items: flex-start;
     padding: 3rem 2rem;
     gap: 1.8rem;
-    transform: none; /* Removed transform conflict */
+    transform: none;
     transition: left 0.4s var(--ease-out-expo);
     box-shadow: 10px 0 30px rgba(0, 0, 0, 0.8);
     z-index: 999;
@@ -1314,6 +1361,11 @@ body.loaded .site-header {
 
   .menu-toggle {
     display: flex;
+  }
+
+  /* Expand Hero Text Rotator Height for Wrapping Mobile Text */
+  .hero-text-rotator {
+    min-height: 5.5rem;
   }
 }
 
@@ -1340,5 +1392,18 @@ body.loaded .site-header {
 
   .hero-copy h1 {
     font-size: clamp(2.2rem, 11vw, 3.8rem);
+  }
+}
+
+/* Reduced Motion Accessibility Settings */
+@media (prefers-reduced-motion: reduce) {
+  body::after,
+  .hero-copy,
+  .scroll-indicator span::before {
+    animation: none !important;
+  }
+  
+  html {
+    scroll-behavior: auto !important;
   }
 }

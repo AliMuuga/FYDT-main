@@ -11,9 +11,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Ali is a graphic designer and full stack web developer creating cinematic, museum-inspired digital experiences.">
   <title>Finn | Digital Museum</title>
+  
+  <!-- Preconnect & Preload Critical Resources -->
   <link rel="icon" type="image/png" href="Images/FYDT/Favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@400;500;600;700&display=swap" as="style">
+  
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="style.css">
@@ -23,7 +27,7 @@
   <!-- ==========================================================================
        LOADING SCREEN
        ========================================================================== -->
-  <div class="loading-screen" aria-hidden="true">
+  <div class="loading-screen" id="loadingScreen" aria-hidden="true">
     <div class="loading-dots" aria-hidden="true">
       <span></span>
       <span></span>
@@ -40,7 +44,7 @@
       <span class="nav-logo"><img src="Images/FYDT/Favicon.png" alt="Ali Muunganirwa logo"></span>
     </a>
     <button class="menu-toggle" type="button" aria-label="Toggle menu">
-      <span></span><span></span>
+      <span></span><span></span><span></span>
     </button>
     <nav class="site-nav" aria-label="Primary navigation">
       <a href="Index.html" data-nav="home" class="active">Home</a>
@@ -198,7 +202,7 @@
                  data-versions='["Images/Posters/Poster (1).jpg"]'>
           <img src="Images/Posters/GEOFF copy.jpg" alt="Typographic Poster Study" loading="lazy">
           <div>
-            <h3>Vans </h3>
+            <h3>Vans</h3>
             <p>Editorial print design focusing on structure and spatial hierarchy.</p>
           </div>
         </article>
@@ -462,5 +466,28 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.21/dist/lenis.min.js"></script>
   <script src="script.js"></script>
+
+  <!-- Instant Preloader Safeguard Script for Mobile -->
+  <script>
+    (function() {
+      const loader = document.getElementById('loadingScreen');
+      const dismissLoader = () => {
+        if (loader && !loader.classList.contains('hidden')) {
+          loader.classList.add('hidden');
+          document.body.classList.add('loaded');
+        }
+      };
+
+      // Dismiss immediately when DOM is interactive
+      if (document.readyState === 'interactive' || document.readyState === 'complete') {
+        dismissLoader();
+      } else {
+        document.addEventListener('DOMContentLoaded', dismissLoader);
+      }
+
+      // Hard safety timeout: loader dissolves after 1.2s maximum no matter what
+      setTimeout(dismissLoader, 1200);
+    })();
+  </script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <!--
   File: Index.html
-  Purpose: Homepage — hero video, featured galleries, and overview.
-  Notes: Uses `style.css` and `script.js` for site-wide layout and interactions.
+  Purpose: Homepage — hero video, featured galleries, interactive showcases, and overview.
+  Notes: Uses `style.css` and `script.js` for site-wide layout and lightbox interactions.
   Last modified: 2026-07-24
 -->
 <html lang="en">
@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="page-home" data-page="home">
+
   <!-- ==========================================================================
        LOADING SCREEN
        ========================================================================== -->
@@ -123,14 +124,14 @@
       </div>
       <div class="collection-grid reveal">
         <a href="posters.html" class="collection-card">
-          <img src="Images/Posters/Gus (1).png" alt="Poster collection preview" loading="lazy">
+          <img src="Images/Posters/Germany.jpg" alt="Poster collection preview" loading="lazy">
           <div>
             <h3>Posters</h3>
             <p>Editorial posters made to feel like objects in a private gallery.</p>
           </div>
         </a>
         <a href="Artworks.html" class="collection-card">
-          <img src="Images/Models/BrOKE (1).jpeg" alt="Art works preview" loading="lazy">
+          <img src="Images/Artworks/Saskia.jpg" alt="Art works preview" loading="lazy">
           <div>
             <h3>Art Works</h3>
             <p>Digital compositions that blur portraiture, collage, and cinematic mood.</p>
@@ -154,6 +155,134 @@
     </section>
 
     <!-- ==========================================================================
+         FEATURED POSTERS SECTION (4 ITEMS)
+         ========================================================================== -->
+    <section class="section" id="featured-posters">
+      <div class="homepage-heading reveal">
+        <p class="eyebrow">Exhibition — Selected Prints</p>
+        <h2>Featured Poster Gallery</h2>
+      </div>
+
+      <div class="collection-grid reveal">
+        <!-- Poster Card 1 -->
+        <article class="collection-card artwork-card"
+                 data-title="Djed Spence Editorial"
+                 data-category="Sports Editorial"
+                 data-description="Mixed-media poster combining action photography, raw scrapbooking elements, and bold typography inspired by modern kit launches."
+                 data-versions='["Images/Posters/Djed.jpg"]'>
+          <img src="Images/Posters/Djed.jpg" alt="Djed Spence Editorial" loading="lazy">
+          <div>
+            <h3>Djed Spence Editorial</h3>
+            <p>Dynamic collage study celebrating football culture and modern sports design.</p>
+          </div>
+        </article>
+
+        <!-- Poster Card 2 -->
+        <article class="collection-card artwork-card"
+                 data-title="Germany Football Concept"
+                 data-category="Sports Editorial"
+                 data-description="High-contrast graphic layout using iconic national colors and energetic athlete portraiture."
+                 data-versions='["Images/Posters/Germany.jpg"]'>
+          <img src="Images/Posters/Germany.jpg" alt="Germany Football Concept" loading="lazy">
+          <div>
+            <h3>Germany National Team</h3>
+            <p>Editorial poster created to feel like a high-end physical gallery print.</p>
+          </div>
+        </article>
+
+        <!-- Poster Card 3 -->
+        <article class="collection-card artwork-card"
+                 data-title="Typographic Composition 03"
+                 data-category="Editorial Print"
+                 data-description="Experimental layout exploring negative space, typography hierarchy, and subtle texture."
+                 data-versions='["Images/Posters/Poster (1).jpg"]'>
+          <img src="Images/Posters/Poster (1).jpg" alt="Typographic Poster Study" loading="lazy">
+          <div>
+            <h3>Typographic Layout 03</h3>
+            <p>Editorial print design focusing on structure and spatial hierarchy.</p>
+          </div>
+        </article>
+
+        <!-- Poster Card 4 -->
+        <article class="collection-card artwork-card"
+                 data-title="Visual Identity Print 04"
+                 data-category="Brand Graphic"
+                 data-description="Bold branding visual exploring modern contrast and cultural symbolism."
+                 data-versions='["Images/Posters/Poster (2).jpg"]'>
+          <img src="Images/Posters/Poster (2).jpg" alt="Brand Graphic Poster" loading="lazy">
+          <div>
+            <h3>Identity Study 04</h3>
+            <p>Bold graphic poster exploring brand presence and high contrast.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         FEATURED ARTWORKS SECTION (4 ITEMS)
+         ========================================================================== -->
+    <section class="section" id="featured-artworks">
+      <div class="homepage-heading reveal">
+        <p class="eyebrow">Exhibition — Fine Art</p>
+        <h2>Featured Artwork Gallery</h2>
+      </div>
+
+      <div class="collection-grid reveal">
+        <!-- Artwork Card 1 -->
+        <article class="collection-card artwork-card"
+                 data-title="Identity & Dualities"
+                 data-category="Afrosurrealism"
+                 data-description="Bold halftone textures, vibrant primary accents, and symbolic layering exploring vision, memory, and culture."
+                 data-versions='["Images/Artworks/GWSM-(1).jpg"]'>
+          <img src="Images/Artworks/GWSM-(1).jpg" alt="Identity & Dualities" loading="lazy">
+          <div>
+            <h3>Identity & Dualities</h3>
+            <p>Afrosurrealist exploration of vision, memory, and primary tones.</p>
+          </div>
+        </article>
+
+        <!-- Artwork Card 2 -->
+        <article class="collection-card artwork-card"
+                 data-title="Tonal Chromatics"
+                 data-category="Visual Fine Art"
+                 data-description="Rich color grading, tactile highlights, and dramatic silhouette framing designed to evoke raw emotion."
+                 data-versions='["Images/Artworks/Panda-(1).jpg"]'>
+          <img src="Images/Artworks/Panda-(1).jpg" alt="Tonal Chromatics" loading="lazy">
+          <div>
+            <h3>Tonal Chromatics</h3>
+            <p>High-contrast surrealism in digital portraiture and mood study.</p>
+          </div>
+        </article>
+
+        <!-- Artwork Card 3 -->
+        <article class="collection-card artwork-card"
+                 data-title="Surreal Figure Study"
+                 data-category="Visual Fine Art"
+                 data-description="Cinematic digital composition blending fluid textures, vivid chroma waves, and figure portraiture."
+                 data-versions='["Images/Artworks/Saskia.jpg"]'>
+          <img src="Images/Artworks/Saskia.jpg" alt="Surreal Figure Study" loading="lazy">
+          <div>
+            <h3>Surreal Figure Study</h3>
+            <p>Digital composition blurring portraiture, collage, and cinematic mood.</p>
+          </div>
+        </article>
+
+        <!-- Artwork Card 4 -->
+        <article class="collection-card artwork-card"
+                 data-title="Abstract Form & Texture"
+                 data-category="Digital Collage"
+                 data-description="Exploration into geometric arrangements, heavy grain overlays, and abstract visual balance."
+                 data-versions='["Images/Artworks/Art (3).jpg"]'>
+          <img src="Images/Artworks/Art (3).jpg" alt="Abstract Form & Texture" loading="lazy">
+          <div>
+            <h3>Geometric Harmony</h3>
+            <p>Textural arrangement and balanced digital fine art composition.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
          FEATURED PROJECTS SECTION
          ========================================================================== -->
     <section class="section project-section">
@@ -163,7 +292,7 @@
       </div>
       <div class="featured-project-grid reveal">
         <article class="featured-project-card">
-          <img src="Images/Posters/GWSM-(1).jpg" alt="Archive House project preview" loading="lazy">
+          <img src="Images/Artworks/GWSM-(1).jpg" alt="Archive House project preview" loading="lazy">
           <div class="project-copy">
             <p class="eyebrow">Archive House</p>
             <h3>Brand campaign for a culture collective.</h3>
@@ -173,7 +302,7 @@
           </div>
         </article>
         <article class="featured-project-card">
-          <img src="Images/Models/Cardi-(1).png" alt="Signal Studio project preview" loading="lazy">
+          <img src="Images/Artworks/Panda-(1).jpg" alt="Signal Studio project preview" loading="lazy">
           <div class="project-copy">
             <p class="eyebrow">Signal Studio</p>
             <h3>Interactive editorial site with immersive pacing.</h3>
@@ -183,7 +312,7 @@
           </div>
         </article>
         <article class="featured-project-card">
-          <img src="Images/Clothing/Alien (1).jpg" alt="Gallery Flow project preview" loading="lazy">
+          <img src="Images/Posters/Djed.jpg" alt="Gallery Flow project preview" loading="lazy">
           <div class="project-copy">
             <p class="eyebrow">Gallery Flow</p>
             <h3>A conceptual fashion and editorial showcase.</h3>
@@ -269,15 +398,15 @@
       </div>
       <div class="homepage-timeline-list reveal">
         <div class="timeline-item">
-          <span>2024</span>
+          <span>2026</span>
           <p>Leading visual and digital experiences for modern creative brands.</p>
         </div>
         <div class="timeline-item">
-          <span>2022</span>
+          <span>2025</span>
           <p>Expanded into full stack development to build interactive brand worlds.</p>
         </div>
         <div class="timeline-item">
-          <span>2020</span>
+          <span>2025</span>
           <p>Started crafting editorial visuals, motion-led storytelling, and fashion narratives.</p>
         </div>
       </div>
@@ -302,19 +431,27 @@
     </div>
   </footer>
 
-  <!-- ==========================================================================
-       EA FC STYLE POP-UP LIGHTBOX MODAL
-       ========================================================================== -->
-  <div class="art-modal" id="artModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <!-- Lightbox Modal -->
+  <div class="art-modal" id="artModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
     <div class="art-modal-container">
-      <div class="reward-header">
-        <h2 class="modal-title" id="modalTitle">CHOOSE YOUR REWARD</h2>
+      <button class="art-modal-close" aria-label="Close modal">&times;</button>
+      <div class="art-modal-stage">
+        <button class="modal-nav prev" aria-label="Previous image">&larr;</button>
+        <img src="" alt="Poster Preview" class="reward-preview-img" id="modalImage">
+        <button class="modal-nav next" aria-label="Next image">&rarr;</button>
       </div>
-      <div class="reward-stage">
-        <img src="" alt="Selected Artwork Preview" class="reward-preview-img">
-      </div>
-      <div class="reward-footer">
-        <button class="btn-confirm-close art-modal-close" aria-label="Confirm Selection">CONFIRM</button>
+      <div class="art-modal-sidebar">
+        <div class="modal-meta-header">
+          <h2 class="modal-title" id="modalTitle">POSTER DETAILS</h2>
+          <span class="category-tag"></span>
+        </div>
+        <div class="modal-meta-body">
+          <p class="modal-description"></p>
+        </div>
+        <div class="version-section">
+          <span class="version-section-title">Versions / Angles</span>
+          <div class="version-thumbnails"></div>
+        </div>
       </div>
     </div>
   </div>

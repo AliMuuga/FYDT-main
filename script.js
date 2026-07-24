@@ -2,7 +2,8 @@
    File: script.js
    Purpose: Digital Studio & Editorial Gallery Interactions
    Includes: Lenis smooth scroll, custom cursor tracking, text rotator, 
-             mobile navigation, GSAP animations, dynamic lightbox modal.
+             mobile navigation, GSAP animations, magnetic buttons, 
+             3D perspective card tilt, and dynamic lightbox modal.
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -81,7 +82,76 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* --------------------------------------------------------------------------
-     04. LOADING STATE & PRELOADER
+     04. MAGNETIC BUTTON INTERACTION
+     -------------------------------------------------------------------------- */
+  if (window.matchMedia('(pointer: fine)').matches) {
+    const magneticBtns = document.querySelectorAll('.btn, .brand-logo, .cart-trigger-btn, .art-modal-close');
+
+    magneticBtns.forEach((btn) => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        if (window.gsap) {
+          gsap.to(btn, {
+            x: x * 0.25,
+            y: y * 0.25,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        }
+      });
+
+      btn.addEventListener('mouseleave', () => {
+        if (window.gsap) {
+          gsap.to(btn, {
+            x: 0,
+            y: 0,
+            duration: 0.5,
+            ease: 'elastic.out(1, 0.4)'
+          });
+        }
+      });
+    });
+  }
+
+  /* --------------------------------------------------------------------------
+     05. 3D CARD PERSPECTIVE TILT
+     -------------------------------------------------------------------------- */
+  if (window.matchMedia('(pointer: fine)').matches && window.gsap) {
+    const cards = document.querySelectorAll(
+      '.poster-card, .art-card, .fashion-card, .artwork-card, .project-card, .collection-card, .card'
+    );
+
+    cards.forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+        gsap.to(card, {
+          rotationY: x * 8,
+          rotationX: -y * 8,
+          transformPerspective: 1000,
+          ease: 'power1.out',
+          duration: 0.4
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          rotationY: 0,
+          rotationX: 0,
+          ease: 'power2.out',
+          duration: 0.6
+        });
+      });
+    });
+  }
+
+  /* --------------------------------------------------------------------------
+     06. LOADING STATE & PRELOADER
      -------------------------------------------------------------------------- */
   const hidePreloader = () => {
     if (loadingScreen) {
@@ -97,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* --------------------------------------------------------------------------
-     05. HERO VIDEO & MEDIA READINESS
+     07. HERO VIDEO & MEDIA READINESS
      -------------------------------------------------------------------------- */
   heroVideos.forEach((video) => {
     if (video.readyState >= 3) {
@@ -108,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* --------------------------------------------------------------------------
-     06. HEADER SCROLL & MOBILE NAVIGATION
+     08. HEADER SCROLL & MOBILE NAVIGATION
      -------------------------------------------------------------------------- */
   const toggleHeader = () => {
     if (header) {
@@ -137,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* --------------------------------------------------------------------------
-     07. HERO TEXT ROTATOR
+     09. HERO TEXT ROTATOR
      -------------------------------------------------------------------------- */
   const rotateTexts = document.querySelectorAll('.hero-text-rotator .rotate-text');
   if (rotateTexts.length > 1) {
@@ -150,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* --------------------------------------------------------------------------
-     08. INTERSECTION OBSERVER REVEAL ANIMATIONS
+     10. INTERSECTION OBSERVER REVEAL ANIMATIONS
      -------------------------------------------------------------------------- */
   if (reveals.length > 0) {
     const revealObserver = new IntersectionObserver((entries) => {
@@ -166,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* --------------------------------------------------------------------------
-     09. ENHANCED GSAP ANIMATIONS & PARALLAX
+     11. ENHANCED GSAP ANIMATIONS & PARALLAX
      -------------------------------------------------------------------------- */
   if (window.gsap) {
     const heroTL = gsap.timeline({ defaults: { ease: 'power4.out' } });
@@ -244,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* --------------------------------------------------------------------------
-     10. ARTWORK LIGHTBOX MODAL (MULTI-VARIANT GALLERY)
+     12. ARTWORK LIGHTBOX MODAL (MULTI-VARIANT GALLERY)
      -------------------------------------------------------------------------- */
   (function initModal() {
     const cardSelector = [

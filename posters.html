@@ -1,103 +1,394 @@
 <!DOCTYPE html>
-<!-- cSpell:ignore FYDT PANA GWSM -->
+<!--
+  File: posters.html
+  Purpose: Poster Exhibition gallery page — interactive grid with lightbox preview.
+  Last modified: 2026-07-24
+-->
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<link rel="icon" type="image/png" href="images/FYDT/Favicon.png">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Posters - FYDT</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Poster designs, sports edits, and editorial graphics by Ali Muunganirwa.">
+  <title>Posters | Ali Muunganirwa</title>
+  <link rel="icon" type="image/png" href="Images/FYDT/Favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="page-posters" data-page="posters">
 
-<div class="cursor"></div>
-<div class="clouds">
-  <div class="cloud"></div>
-  <div class="cloud"></div>
-  <div class="cloud"></div>
-</div>
+  <!-- Loading Screen -->
+  <div class="loading-screen" aria-hidden="true">
+    <div class="loading-dots" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <p>Loading poster collection</p>
+  </div>
 
-<header>
-  <a href="Index.html"><img src="images/FYDT/LOGO.png" class="logo" alt="FYDT Logo"></a>
-  <div class="mode-toggle" id="modeToggle">
-    <!-- Sun SVG (visible when in dark mode) -->
-    <svg class="sun-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="5"/>
-      <g stroke="#ffa500" stroke-width="2" stroke-linecap="round">
-        <line x1="12" y1="1" x2="12" y2="4"/>
-        <line x1="12" y1="20" x2="12" y2="23"/>
-        <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/>
-        <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
-        <line x1="1" y1="12" x2="4" y2="12"/>
-        <line x1="20" y1="12" x2="23" y2="12"/>
-        <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/>
-        <line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
-      </g>
-    </svg>
-  </div>
-  <nav>
-    <a href="models.html">Models</a>
-    <a href="clothing.html">Clothing</a>
-  </nav>
-</header>
+  <!-- Header Navigation -->
+  <header class="site-header">
+    <a class="brand" href="Index.html" data-nav="home">
+      <span class="nav-logo"><img src="Images/FYDT/Favicon.png" alt="Ali Muunganirwa logo"></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Toggle menu">
+      <span></span><span></span>
+    </button>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="Index.html" data-nav="home">Home</a>
+      <a href="posters.html" data-nav="posters" class="active">Posters</a>
+      <a href="Artworks.html" data-nav="art">Art Works</a>
+      <a href="clothing.html" data-nav="clothes">Clothes</a>
+      <a href="website.html" data-nav="websites">Websites</a>
+    </nav>
+  </header>
 
-<div class="grid">
-  <div class="card morph-target">
-    <img src="images/Posters/Gus (1).png" class="variant-img" style="display:block" loading="lazy">
-    <img src="images/Posters/Gus (2).png" class="variant-img" style="display:none" loading="lazy">
-    <div class="name">Gus</div>
-  </div>
-  <div class="card morph-target">
-    <img src="images/Posters/Panda-(1).jpg" class="variant-img" style="display:block" loading="lazy">
-    <img src="images/Posters/Panda-(2).jpg" class="variant-img" style="display:none" loading="lazy">
-    <img src="images/Posters/Panda-(3).jpg" class="variant-img" style="display:none" loading="lazy">
-    <div class="name">Panda</div>
-  </div>
-  <div class="card morph-target">
-    <img src="images/Posters/Pana-(1).jpg" class="variant-img" style="display:block" loading="lazy">
-    <img src="images/Posters/Pana-(2).jpg" class="variant-img" style="display:none" loading="lazy">
-    <img src="images/Posters/Pana-(3).jpg" class="variant-img" style="display:none" loading="lazy">
-    <img src="images/Posters/Pana-(4).jpg" class="variant-img" style="display:none" loading="lazy">
-    <div class="name">2PANA</div>
-  </div>
-  <div class="card morph-target">
-    <img src="images/Posters/GWSM-(1).jpg" class="variant-img" style="display:block" loading="lazy">
-    <img src="images/Posters/GWSM-(2).jpg" class="variant-img" style="display:none" loading="lazy">
-    <img src="images/Posters/GWSM-(3).jpg" class="variant-img" style="display:none" loading="lazy">
-    <img src="images/Posters/GWSM-(4).jpg" class="variant-img" style="display:none" loading="lazy">
-    <div class="name">GWSM</div>
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-stage">
+        <video class="hero-background-video" muted autoplay loop playsinline preload="metadata" poster="Images/FYDT/hero-poster.jpg" aria-hidden="true">
+          <source src="Images/Hero/posters.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-copy">
+          <p class="eyebrow">Exhibition — Posters</p>
+          <h1>Graphic & Editorial Prints</h1>
+          
+          <div class="hero-text-rotator" aria-live="polite">
+            <span class="rotate-text active">International football & national team series.</span>
+            <span class="rotate-text">Skateboarding & streetwear brand concepts.</span>
+            <span class="rotate-text">High-impact editorial poster design.</span>
+          </div>
 
-    <!-- NEW ROW CARD -->
-  </div>
-  <div class="card morph-target">
-    <img src="Images/Posters/EL (1).jpg" class="variant-img" style="display:block" loading="lazy">
-    <img src="images/Posters/EL (2).jpg" class="variant-img" style="display:none" loading="lazy">
-    <div class="name">She said no</div>
-  </div>
-  <div class="card morph-target">
-    <img src="Images/Posters/Jan- (1).jpg" class="variant-img" style="display:block" loading="lazy">
-    <img src="images/Posters/Jan- (2).jpg" class="variant-img" style="display:none" loading="lazy">
-    <img src="images/Posters/Jan- (3).jpg" class="variant-img" style="display:none" loading="lazy">
-    <div class="name">January</div>
-  </div>
-  <div class="card morph-target">
-    <img src="Images/Posters/Mat (1).jpg" class="variant-img" style="display:block" loading="lazy">
-    <img src="images/Posters/Mat (2).jpg" class="variant-img" style="display:none" loading="lazy">
-    <img src="images/Posters/Mat (3).jpg" class="variant-img" style="display:none" loading="lazy">
-      <img src="images/Posters/Mat (4).jpg" class="variant-img" style="display:none" loading="lazy">
-    <div class="name">BrOKE</div>
+          <div class="hero-actions">
+            <a class="btn btn-dark" href="#gallery">Explore Posters</a>
+            <a class="btn btn-secondary" href="#contact">Contact</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-</div>
+    <!-- Poster Grid Section -->
+    <section class="poster-grid section" id="gallery">
+
+      <!-- Argentina -->
+      <article class="poster-card reveal" 
+               data-title="Argentina" 
+               data-meta="National Team Series / 2024"
+               data-versions='["Images/Posters/Argentina.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/Argentina.jpg" alt="Argentina Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Argentina</h2>
+          <p>National team graphic concept</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Brazil -->
+      <article class="poster-card reveal" 
+               data-title="Brazil" 
+               data-meta="National Team Series / 2024"
+               data-versions='["Images/Posters/Brazil.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/Brazil.jpg" alt="Brazil Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Brazil</h2>
+          <p>National team graphic concept</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Cape -->
+      <article class="poster-card reveal" 
+               data-title="Cape" 
+               data-meta="Editorial Series / 2024"
+               data-versions='["Images/Posters/Cape.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/Cape.jpg" alt="Cape Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Cape</h2>
+          <p>Editorial visual design</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Djed -->
+      <article class="poster-card reveal" 
+               data-title="Djed" 
+               data-meta="Athlete Study / 2024"
+               data-versions='["Images/Posters/Djed.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/Djed.jpg" alt="Djed Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Djed</h2>
+          <p>Sports graphic design</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Final -->
+      <article class="poster-card reveal" 
+               data-title="Final" 
+               data-meta="Editorial Concept / 2024"
+               data-versions='["Images/Posters/Final.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/Final.jpg" alt="Final Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Final</h2>
+          <p>Editorial print design</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- France -->
+      <article class="poster-card reveal" 
+               data-title="France" 
+               data-meta="National Team Series / 2024"
+               data-versions='["Images/Posters/France.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/France.jpg" alt="France Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>France</h2>
+          <p>National team graphic concept</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Geoff -->
+      <article class="poster-card reveal" 
+               data-title="Geoff" 
+               data-meta="Portrait Graphics / 2024"
+               data-versions='["Images/Posters/GEOFF copy.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/GEOFF copy.jpg" alt="Geoff Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Geoff</h2>
+          <p>Graphic portrait composition</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Germany -->
+      <article class="poster-card reveal" 
+               data-title="Germany" 
+               data-meta="National Team Series / 2024"
+               data-versions='["Images/Posters/Germany.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/Germany.jpg" alt="Germany Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Germany</h2>
+          <p>National team graphic concept</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Her -->
+      <article class="poster-card reveal" 
+               data-title="Her" 
+               data-meta="Conceptual Art / 2024"
+               data-versions='["Images/Posters/Her.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/Her.jpg" alt="Her Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Her</h2>
+          <p>Conceptual poster print</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- MBJ V1 -->
+      <article class="poster-card reveal" 
+               data-title="MBJ V1" 
+               data-meta="Celebrity Editorial / 2024"
+               data-versions='["Images/Posters/mbj  V1.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/mbj  V1.jpg" alt="MBJ V1 Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>MBJ V1</h2>
+          <p>Editorial graphic poster</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Nike P-Rod -->
+      <article class="poster-card reveal" 
+               data-title="Nike P-Rod" 
+               data-meta="Skate Culture / 2024"
+               data-versions='["Images/Posters/Nike P rod.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/Nike P rod.jpg" alt="Nike P-Rod Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Nike P-Rod</h2>
+          <p>Skate culture brand edit</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Nyjah -->
+      <article class="poster-card reveal" 
+               data-title="Nyjah Huston" 
+               data-meta="Skate Culture / 2024"
+               data-versions='["Images/Posters/Njyah.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/Njyah.jpg" alt="Nyjah Huston Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Nyjah Huston</h2>
+          <p>Athlete graphic series</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Norway -->
+      <article class="poster-card reveal" 
+               data-title="Norway" 
+               data-meta="National Team Series / 2024"
+               data-versions='["Images/Posters/Norway.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/Norway.jpg" alt="Norway Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Norway</h2>
+          <p>National team graphic concept</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Portugal -->
+      <article class="poster-card reveal" 
+               data-title="Portugal" 
+               data-meta="National Team Series / 2024"
+               data-versions='["Images/Posters/Portugal.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/Portugal.jpg" alt="Portugal Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Portugal</h2>
+          <p>National team graphic concept</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Reece James -->
+      <article class="poster-card reveal" 
+               data-title="Reece James V1" 
+               data-meta="Athlete Series / 2024"
+               data-versions='["Images/Posters/Reece final v1.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/Reece final v1.jpg" alt="Reece James Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Reece James V1</h2>
+          <p>Football graphic design</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Cristiano Ronaldo -->
+      <article class="poster-card reveal" 
+               data-title="Cristiano Ronaldo" 
+               data-meta="Athlete Series / 2024"
+               data-versions='["Images/Posters/ronal.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/ronal.jpg" alt="Cristiano Ronaldo Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Cristiano Ronaldo</h2>
+          <p>Sports graphic concept</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Spain -->
+      <article class="poster-card reveal" 
+               data-title="Spain" 
+               data-meta="National Team Series / 2024"
+               data-versions='["Images/Posters/Spain.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/Spain.jpg" alt="Spain Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Spain</h2>
+          <p>National team graphic concept</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Vans -->
+      <article class="poster-card reveal" 
+               data-title="Vans" 
+               data-meta="Brand Concepts / 2024"
+               data-versions='["Images/Posters/Vans copy.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Posters/Vans copy.jpg" alt="Vans Poster" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Vans</h2>
+          <p>Streetwear brand poster</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer" id="contact">
+    <div class="social-links">
+      <a href="https://www.instagram.com/finnyoudidthis/" target="_blank" rel="noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/" target="_blank" rel="noreferrer" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://github.com/" target="_blank" rel="noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+      <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="mailto:ali@museumfolio.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </footer>
+
+  <!-- Lightbox Modal -->
+  <div class="art-modal" id="artModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="art-modal-container">
+      <button class="art-modal-close" aria-label="Close modal">&times;</button>
+      <div class="art-modal-stage">
+        <button class="modal-nav prev" aria-label="Previous image">&larr;</button>
+        <img src="" alt="Poster Preview" class="reward-preview-img" id="modalImage">
+        <button class="modal-nav next" aria-label="Next image">&rarr;</button>
+      </div>
+      <div class="art-modal-sidebar">
+        <div class="modal-meta-header">
+          <h2 class="modal-title" id="modalTitle">POSTER DETAILS</h2>
+          <span class="category-tag"></span>
+        </div>
+        <div class="modal-meta-body">
+          <p class="modal-description"></p>
+        </div>
+        <div class="version-section">
+          <span class="version-section-title">Versions / Angles</span>
+          <div class="version-thumbnails"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.21/dist/lenis.min.js"></script>
+  <script src="script.js"></script>
 </body>
-
-
-<div class="glitch-transition"></div>
-<script src="script.js"></script>
-<div class="lightbox" id="lightbox">
-  <span class="close">&times;</span>
-  <img class="lightbox-img" id="lightboxImg">
-
-  <div class="nav prev">&#10094;</div>
-  <div class="nav next">&#10095;</div>
-</div>
 </html>

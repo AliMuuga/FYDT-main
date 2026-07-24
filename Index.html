@@ -1,102 +1,329 @@
 <!DOCTYPE html>
+<!--
+  File: Index.html
+  Purpose: Homepage — hero video, featured galleries, and overview.
+  Notes: Uses `style.css` and `script.js` for site-wide layout and interactions.
+  Last modified: 2026-07-24
+-->
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<link rel="icon" type="image/png" href="images/FYDT/Favicon.png">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FYDT Portfolio</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ali Muunganirwa is a graphic designer and full stack web developer creating cinematic, museum-inspired digital experiences.">
+  <title>Ali Muunganirwa | Digital Museum</title>
+  <link rel="icon" type="image/png" href="Images/FYDT/Favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-
-<!-- CUSTOM CURSOR -->
-<div class="cursor"></div>
-<div class="clouds">
-  <div class="cloud"></div>
-  <div class="cloud"></div>
-  <div class="cloud"></div>
-</div>
-
-<!-- HEADER -->
-<header>
-  <!-- Mode toggle button (sun/moon SVG) - far left -->
-  <div class="mode-toggle" id="modeToggle">
-    <!-- Sun SVG (visible when in dark mode) -->
-    <svg class="sun-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="5"/>
-      <g stroke="#ffa500" stroke-width="2" stroke-linecap="round">
-        <line x1="12" y1="1" x2="12" y2="4"/>
-        <line x1="12" y1="20" x2="12" y2="23"/>
-        <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/>
-        <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
-        <line x1="1" y1="12" x2="4" y2="12"/>
-        <line x1="20" y1="12" x2="23" y2="12"/>
-        <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/>
-        <line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
-      </g>
-    </svg>
-
-    <!-- Moon SVG (visible when in light mode) -->
-    <svg class="moon-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-    </svg>
+<body class="page-home" data-page="home">
+  <!-- ==========================================================================
+       LOADING SCREEN
+       ========================================================================== -->
+  <div class="loading-screen" aria-hidden="true">
+    <div class="loading-dots" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <p>Preparing the exhibition</p>
   </div>
 
-  <!-- Logo centered -->
-  <div class="logo-container">
-    <a href="Index.html"><img src="images/FYDT/LOGO.png" class="logo" alt="FYDT Logo"></a>
+  <!-- ==========================================================================
+       SITE NAVIGATION HEADER
+       ========================================================================== -->
+  <header class="site-header">
+    <a class="brand" href="Index.html" data-nav="home">
+      <span class="nav-logo"><img src="Images/FYDT/Favicon.png" alt="Ali Muunganirwa logo"></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Toggle menu">
+      <span></span><span></span>
+    </button>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="Index.html" data-nav="home" class="active">Home</a>
+      <a href="posters.html" data-nav="posters">Posters</a>
+      <a href="Artworks.html" data-nav="art">Art Works</a>
+      <a href="clothing.html" data-nav="clothes">Clothes</a>
+      <a href="website.html" data-nav="websites">Websites</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <!-- ==========================================================================
+         HERO SECTION
+         ========================================================================== -->
+    <section class="hero-section">
+      <div class="hero-stage">
+        <video class="hero-background-video" muted autoplay loop playsinline preload="metadata" poster="Images/FYDT/Favicon.png" aria-hidden="true">
+          <source src="Images/Hero/Index.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-copy">
+          <p class="eyebrow">Digital Museum</p>
+          <h1>Ali Muunganirwa</h1>
+          
+          <div class="hero-text-rotator" aria-live="polite">
+            <span class="rotate-text active">Graphic Designer & Full Stack Web Developer</span>
+            <span class="rotate-text">Designing experiences that tell stories.</span>
+            <span class="rotate-text">Brand systems, editorial motion & web design.</span>
+            <span class="rotate-text">Creating cinematic digital installations.</span>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-dark" href="#collections">Explore Collection</a>
+            <a class="btn btn-secondary" href="#contact">Contact</a>
+          </div>
+        </div>
+
+        <a class="scroll-indicator" href="#about" aria-label="Scroll to about section">
+          <span></span>
+          <small>Scroll</small>
+        </a>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         ABOUT SECTION
+         ========================================================================== -->
+    <section class="section about-section" id="about">
+      <div class="homepage-heading reveal">
+        <p class="eyebrow">Featured artist</p>
+        <h2>Ali is the creative director behind cinema‑grade brand work and digital exhibition design.</h2>
+      </div>
+      <div class="homepage-about-grid reveal">
+        <div class="about-copy">
+          <p class="body-text">Ali merges editorial design, digital product craft, and storytelling to create work that feels premium, memorable, and deeply personal.</p>
+          <div class="about-detail">
+            <h3>Design philosophy</h3>
+            <p>Every project is treated like an installation: composition, motion, and narrative are balanced so the work feels both sharp and cinematic.</p>
+          </div>
+          <div class="about-detail">
+            <h3>Inspiration</h3>
+            <p>Film, fashion, architecture, and art history shape a visual language that is luxurious, polished, and unexpectedly bold.</p>
+          </div>
+          <div class="about-detail">
+            <h3>Specialties</h3>
+            <p>Brand systems, editorial motion, image manipulation, responsive web experiences, and full stack development for modern creative platforms.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         COLLECTIONS SECTION
+         ========================================================================== -->
+    <section class="section collection-section" id="collections">
+      <div class="homepage-heading reveal">
+        <p class="eyebrow">Featured collections</p>
+        <h2>Four exhibition rooms for bold visual work.</h2>
+      </div>
+      <div class="collection-grid reveal">
+        <a href="posters.html" class="collection-card">
+          <img src="Images/Posters/Gus (1).png" alt="Poster collection preview" loading="lazy">
+          <div>
+            <h3>Posters</h3>
+            <p>Editorial posters made to feel like objects in a private gallery.</p>
+          </div>
+        </a>
+        <a href="Artworks.html" class="collection-card">
+          <img src="Images/Models/BrOKE (1).jpeg" alt="Art works preview" loading="lazy">
+          <div>
+            <h3>Art Works</h3>
+            <p>Digital compositions that blur portraiture, collage, and cinematic mood.</p>
+          </div>
+        </a>
+        <a href="clothing.html" class="collection-card">
+          <img src="Images/Clothing/Retro (1).jpg" alt="Clothes collection preview" loading="lazy">
+          <div>
+            <h3>Clothes</h3>
+            <p>Fashion concepts that move between streetwear, archive references, and tactile styling.</p>
+          </div>
+        </a>
+        <a href="website.html" class="collection-card">
+          <img src="Images/FYDT/Logo.png" alt="Websites collection preview" loading="lazy">
+          <div>
+            <h3>Websites</h3>
+            <p>Interactive digital spaces designed as contemporary installations.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         FEATURED PROJECTS SECTION
+         ========================================================================== -->
+    <section class="section project-section">
+      <div class="homepage-heading reveal">
+        <p class="eyebrow">Featured projects</p>
+        <h2>Selected work that defines the practice.</h2>
+      </div>
+      <div class="featured-project-grid reveal">
+        <article class="featured-project-card">
+          <img src="Images/Posters/GWSM-(1).jpg" alt="Archive House project preview" loading="lazy">
+          <div class="project-copy">
+            <p class="eyebrow">Archive House</p>
+            <h3>Brand campaign for a culture collective.</h3>
+            <p>Editorial story, motion-led visuals, and polished digital presentation.</p>
+            <div class="project-meta"><span>Branding</span><span>2024</span></div>
+            <a href="#" class="btn btn-secondary">View Project</a>
+          </div>
+        </article>
+        <article class="featured-project-card">
+          <img src="Images/Models/Cardi-(1).png" alt="Signal Studio project preview" loading="lazy">
+          <div class="project-copy">
+            <p class="eyebrow">Signal Studio</p>
+            <h3>Interactive editorial site with immersive pacing.</h3>
+            <p>Clean interface, rich imagery, and subtle motion for a modern creative studio.</p>
+            <div class="project-meta"><span>Web</span><span>2024</span></div>
+            <a href="#" class="btn btn-secondary">View Project</a>
+          </div>
+        </article>
+        <article class="featured-project-card">
+          <img src="Images/Clothing/Alien (1).jpg" alt="Gallery Flow project preview" loading="lazy">
+          <div class="project-copy">
+            <p class="eyebrow">Gallery Flow</p>
+            <h3>A conceptual fashion and editorial showcase.</h3>
+            <p>Typography-first layout with luxurious spacing and refined visual sequencing.</p>
+            <div class="project-meta"><span>Fashion</span><span>2023</span></div>
+            <a href="#" class="btn btn-secondary">View Project</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SKILLS SECTION
+         ========================================================================== -->
+    <section class="section skills-section">
+      <div class="homepage-heading reveal">
+        <p class="eyebrow">Skills</p>
+        <h2>Design and development tools that support premium work.</h2>
+      </div>
+      <div class="skills-grid reveal">
+        <div class="skill-panel">
+          <h3>Design</h3>
+          <ul>
+            <li>Photoshop</li>
+            <li>Illustrator</li>
+            <li>InDesign</li>
+            <li>Figma</li>
+          </ul>
+        </div>
+        <div class="skill-panel">
+          <h3>Development</h3>
+          <ul>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+            <li>PHP</li>
+            <li>MySQL</li>
+            <li>Git</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         PROCESS SECTION
+         ========================================================================== -->
+    <section class="section process-section">
+      <div class="homepage-heading reveal">
+        <p class="eyebrow">Design process</p>
+        <h2>From first research to the final delivery.</h2>
+      </div>
+      <div class="process-grid reveal">
+        <div class="process-step">
+          <strong>Research</strong>
+          <p>Understand the brand, audience and visual culture that will shape each project.</p>
+        </div>
+        <div class="process-step">
+          <strong>Concept</strong>
+          <p>Build strong visual direction and narrative ideas for a memorable experience.</p>
+        </div>
+        <div class="process-step">
+          <strong>Design</strong>
+          <p>Create refined layouts, imagery, and motion that feel editorial and polished.</p>
+        </div>
+        <div class="process-step">
+          <strong>Refine</strong>
+          <p>Iterate details, typography, and interaction until everything feels intentional.</p>
+        </div>
+        <div class="process-step">
+          <strong>Deliver</strong>
+          <p>Launch with a strong digital presentation, ready for editorial and client use.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         TIMELINE SECTION
+         ========================================================================== -->
+    <section class="section timeline-section">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Experience timeline</p>
+        <h2>Milestones in a creative journey.</h2>
+      </div>
+      <div class="homepage-timeline-list reveal">
+        <div class="timeline-item">
+          <span>2024</span>
+          <p>Leading visual and digital experiences for modern creative brands.</p>
+        </div>
+        <div class="timeline-item">
+          <span>2022</span>
+          <p>Expanded into full stack development to build interactive brand worlds.</p>
+        </div>
+        <div class="timeline-item">
+          <span>2020</span>
+          <p>Started crafting editorial visuals, motion-led storytelling, and fashion narratives.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="site-footer" id="contact">
+    <div class="footer-info">
+      <p class="eyebrow">Contact</p>
+      <p>Email: <a href="mailto:ali@museumfolio.com">ali@museumfolio.com</a></p>
+      <p>Socials: Find the latest work and studio updates.</p>
+    </div>
+    <div class="social-links">
+      <a href="https://www.instagram.com/finnyoudidthis/" target="_blank" rel="noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/" target="_blank" rel="noreferrer" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://github.com/" target="_blank" rel="noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+      <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="mailto:ali@museumfolio.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       EA FC STYLE POP-UP LIGHTBOX MODAL
+       ========================================================================== -->
+  <div class="art-modal" id="artModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="art-modal-container">
+      <div class="reward-header">
+        <h2 class="modal-title" id="modalTitle">CHOOSE YOUR REWARD</h2>
+      </div>
+      <div class="reward-stage">
+        <img src="" alt="Selected Artwork Preview" class="reward-preview-img">
+      </div>
+      <div class="reward-footer">
+        <button class="btn-confirm-close art-modal-close" aria-label="Confirm Selection">CONFIRM</button>
+      </div>
+    </div>
   </div>
 
-  <nav>
-    <a href="models.html">Models</a>
-    <a href="posters.html">Posters</a>
-    <a href="clothing.html">Clothing</a>
-  </nav>
-
-  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
-</header>
-
-<!-- HERO SECTION -->
-<section class="hero">
-  <video autoplay muted loop class="scene active">
-    <source src="videos/scene1.mp4" type="video/mp4">
-  </video>
-  <video autoplay muted loop class="scene">
-    <source src="videos/scene2.mp4" type="video/mp4">
-  </video>
-  <video autoplay muted loop class="scene">
-    <source src="videos/scene3.mp4" type="video/mp4">
-  </video>
-
-  <canvas id="starCanvas"></canvas>
-  <img src="images/FYDT/LOGOO.png" class="dvd-logo" alt="DVD Logo">
-
-  <div class="hero-content">
-    <h1 id="heroText">Welcome to FYDT</h1>
-    <p id="heroSubtitle">Finnyoudidthis</p>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="socials">
-    <a href="https://www.instagram.com/finnyoudidthis/?hl=en" target="_blank"><i class="ig"></i></a>
-    <a href="https://www.tiktok.com/@finnyoudidthis?_r=1&_t=ZS-94pQW3Cpxp7" target="_blank"><i class="tiktok"></i></a>
-    <a href="mailto:Fatherfinnn@Gmail.com"><i class="email"></i></a>
-  </div>
-</footer>
-
-<!-- GLITCH TRANSITION -->
-<div class="glitch-transition"></div>
-
-<script src="script.js"></script>
-
-<div class="lightbox" id="lightbox">
-  <span class="close">&times;</span>
-  <img class="lightbox-img" id="lightboxImg">
-
-  <div class="nav prev">&#10094;</div>
-  <div class="nav next">&#10095;</div>
-</div>
+  <!-- ==========================================================================
+       SCRIPTS
+       ========================================================================== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.21/dist/lenis.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

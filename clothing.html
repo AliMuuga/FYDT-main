@@ -1,80 +1,464 @@
 <!DOCTYPE html>
+<!--
+  File: clothing.html
+  Purpose: Clothing/fashion collection gallery presented like a museum collection.
+  Notes: Groups garment variations, front/back views, and colorways into expandable popup modal cards.
+  Last modified: 2026-07-24
+-->
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<link rel="icon" type="image/png" href="images/FYDT/Favicon.png">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clothing - FYDT</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fashion design work presented like a museum collection with editorial pacing and premium labels.">
+  <title>Clothes | Ali Muunganirwa</title>
+  <link rel="icon" type="image/png" href="Images/FYDT/Favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="page-clothes" data-page="clothes">
 
-<div class="cursor"></div>
-<div class="clouds">
-  <div class="cloud"></div>
-  <div class="cloud"></div>
-  <div class="cloud"></div>
-</div>
+  <!-- ==========================================================================
+       LOADING SCREEN
+       ========================================================================== -->
+  <div class="loading-screen" aria-hidden="true">
+    <div class="loading-dots" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <p>Preparing the exhibition</p>
+  </div>
 
-<header>
-  <a href="Index.html"><img src="images/FYDT/LOGO.png" class="logo" alt="FYDT Logo" loading="lazy"></a>
-  <div class="mode-toggle" id="modeToggle">
-    <svg class="sun-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="5"/>
-      <g stroke="#ffa500" stroke-width="2" stroke-linecap="round">
-        <line x1="12" y1="1" x2="12" y2="4"/>
-        <line x1="12" y1="20" x2="12" y2="23"/>
-        <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/>
-        <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
-        <line x1="1" y1="12" x2="4" y2="12"/>
-        <line x1="20" y1="12" x2="23" y2="12"/>
-        <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/>
-        <line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/>
-      </g>
-    </svg>
-  </div>
-  <nav>
-    <a href="models.html">Models</a>
-    <a href="posters.html">Posters</a>
-  </nav>
-</header>
+  <!-- ==========================================================================
+       SITE NAVIGATION HEADER
+       ========================================================================== -->
+  <header class="site-header">
+    <a class="brand" href="Index.html" data-nav="home">
+      <span class="nav-logo"><img src="Images/FYDT/Favicon.png" alt="Ali Muunganirwa logo"></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Toggle menu">
+      <span></span><span></span>
+    </button>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="Index.html" data-nav="home">Home</a>
+      <a href="posters.html" data-nav="posters">Posters</a>
+      <a href="Artworks.html" data-nav="art">Art Works</a>
+      <a href="clothing.html" data-nav="clothes" class="active">Clothes</a>
+      <a href="website.html" data-nav="websites">Websites</a>
+    </nav>
+  </header>
 
-<div class="grid">
-  <div class="card morph-target">
-    <img src="images/Clothing/Broke-v1.jpg" class="variant-img" style="display:block" loading="lazy">
-    <img src="images/Clothing/Broke-v2.jpg" class="variant-img" style="display:none" loading="lazy">
-    <img src="images/Clothing/Broke-v3.jpg" class="variant-img" style="display:none" loading="lazy">
-    <div class="name">Broke (It's not real)</div>
-  </div>
-  <div class="card morph-target">
-    <img src="images/Clothing/Retro (1).jpg" class="variant-img" style="display:block" loading="lazy">
-    <img src="images/Clothing/Retro (2).jpg" class="variant-img" style="display:none" loading="lazy">
-    <img src="images/Clothing/Retro (3).jpg" class="variant-img" style="display:none" loading="lazy">
-    <img src="images/Clothing/Retro (4).jpg" class="variant-img" style="display:none" loading="lazy">
-    <div class="name">Old Jersey</div>
-  </div>
-  <div class="card morph-target">
-    <img src="images/Clothing/BCard (1).jpg" class="variant-img" style="display:block" loading="lazy">
-    <img src="images/Clothing/BCard (2).jpg" class="variant-img" style="display:none" loading="lazy">
-    <div class="name">Burning Man Cardigan</div>
-  </div>
-  <div class="card morph-target">
-    <img src="images/Clothing/Alien (1).jpg" class="variant-img" style="display:block" loading="lazy">
-    <img src="images/Clothing/Alien (2).jpg" class="variant-img" style="display:none" loading="lazy">
-    <div class="name">Alien Tee</div>
-  </div>
-</div>
+  <main id="main-content">
+    <!-- ==========================================================================
+         HERO SECTION WITH TEXT ROTATOR
+         ========================================================================== -->
+    <section class="hero-section">
+      <div class="hero-stage">
+        <video class="hero-background-video" muted autoplay loop playsinline preload="metadata" poster="Images/FYDT/hero-poster.jpg" aria-hidden="true">
+          <source src="Images/Hero/clothes.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-copy">
+          <p class="eyebrow">Exhibition — Fashion</p>
+          <h1>Living Fashion Archive</h1>
+          
+          <!-- Dynamic Text Rotator -->
+          <div class="hero-text-rotator" aria-live="polite">
+            <span class="rotate-text active">Garments treated as objects, memory, and museum pieces.</span>
+            <span class="rotate-text">Editorial tailoring, tactile textures, and streetwear silhouettes.</span>
+            <span class="rotate-text">Graphic experimentation shaped through bold, symbolic concepts.</span>
+          </div>
 
+          <div class="hero-actions">
+            <a class="btn btn-dark" href="#gallery">View Collection</a>
+            <a class="btn btn-secondary" href="#contact">Contact</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <!-- ==========================================================================
+         CLOTHING COLLECTION GRID
+         Groups front/back prints, colorways, and multi-version pieces into single cards.
+         ========================================================================== -->
+    <section class="poster-grid section" id="gallery">
+
+      <!-- Alien Series (2 Versions) -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="Alien Tee" 
+               data-category="Exhibition — Fashion"
+               data-description="Graphic experimentation through symbolic imagery."
+               data-versions='["Images/Clothing/Alien (1).jpg","Images/Clothing/Alien (2).jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/Alien (1).jpg" alt="Alien Tee" loading="lazy" decoding="async">
+          <span class="version-badge"><i class="fa-solid fa-layer-group"></i> 2 Views</span>
+        </div>
+        <div class="poster-meta">
+          <h2>Alien Tee</h2>
+          <p>Graphic experimentation through symbolic imagery.</p>
+          <span>2024 / 2 Views</span>
+        </div>
+      </article>
+
+      <!-- Broke Collection (3 Versions) -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="Broke Collection" 
+               data-category="Exhibition — Fashion"
+               data-description="Monochrome tailoring with elevated streetwear attitude."
+               data-versions='["Images/Clothing/Broke-v1.jpg","Images/Clothing/broke-v2.jpg","Images/Clothing/broke-v3.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/Broke-v1.jpg" alt="Broke Collection" loading="lazy" decoding="async">
+          <span class="version-badge"><i class="fa-solid fa-layer-group"></i> 3 Styles</span>
+        </div>
+        <div class="poster-meta">
+          <h2>Broke Collection</h2>
+          <p>Monochrome tailoring with elevated streetwear attitude.</p>
+          <span>2023 / 3 Styles</span>
+        </div>
+      </article>
+
+      <!-- Gunna Tee (Front & Back) -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="Gunna Tee" 
+               data-category="Exhibition — Fashion"
+               data-description="Double-sided graphic editorial jersey mockup."
+               data-versions='["Images/Clothing/Front Gunna.jpg","Images/Clothing/BackGunna.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/Front Gunna.jpg" alt="Gunna Tee Front" loading="lazy" decoding="async">
+          <span class="version-badge"><i class="fa-solid fa-layer-group"></i> Front / Back</span>
+        </div>
+        <div class="poster-meta">
+          <h2>Gunna Tee</h2>
+          <p>Double-sided graphic editorial jersey mockup.</p>
+          <span>2024 / Front & Back</span>
+        </div>
+      </article>
+
+      <!-- Retro Jersey Series (4 Versions) -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="Retro Jersey Series" 
+               data-category="Exhibition — Fashion"
+               data-description="Vintage-inspired layering softened by tactile rhythm."
+               data-versions='["Images/Clothing/Retro (1).jpg","Images/Clothing/Retro (2).jpg","Images/Clothing/Retro (3).jpg","Images/Clothing/Retro (4).jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/Retro (1).jpg" alt="Retro Jersey" loading="lazy" decoding="async">
+          <span class="version-badge"><i class="fa-solid fa-layer-group"></i> 4 Colorways</span>
+        </div>
+        <div class="poster-meta">
+          <h2>Retro Jersey Series</h2>
+          <p>Vintage-inspired layering softened by tactile rhythm.</p>
+          <span>2024 / 4 Colorways</span>
+        </div>
+      </article>
+
+      <!-- HM Hoodies (Front & Back) -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="HM Heavyweight Hoodie" 
+               data-category="Exhibition — Fashion"
+               data-description="Structured fleece silhouette with subtle brand accents."
+               data-versions='["Images/Clothing/HMF1.png","Images/Clothing/HMB1.png"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/HMF1.png" alt="HM Hoodie Front" loading="lazy" decoding="async">
+          <span class="version-badge"><i class="fa-solid fa-layer-group"></i> Front / Back</span>
+        </div>
+        <div class="poster-meta">
+          <h2>HM Heavyweight Hoodie</h2>
+          <p>Structured fleece silhouette with subtle brand accents.</p>
+          <span>2024 / Front & Back</span>
+        </div>
+      </article>
+
+      <!-- Teeth Graphic Piece (Front & Back) -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="Teeth Graphic Garment" 
+               data-category="Exhibition — Fashion"
+               data-description="Surreal mouth print placement study."
+               data-versions='["Images/Clothing/Teeth front.jpg","Images/Clothing/Teeth back.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/Teeth front.jpg" alt="Teeth Garment Front" loading="lazy" decoding="async">
+          <span class="version-badge"><i class="fa-solid fa-layer-group"></i> Front / Back</span>
+        </div>
+        <div class="poster-meta">
+          <h2>Teeth Graphic Garment</h2>
+          <p>Surreal mouth print placement study.</p>
+          <span>2024 / Front & Back</span>
+        </div>
+      </article>
+
+      <!-- Puma Studies (Puma & Fake Puma) -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="Puma Brand Studies" 
+               data-category="Exhibition — Fashion"
+               data-description="Reimagined sport-culture graphic concepts."
+               data-versions='["Images/Clothing/Puma.jpg","Images/Clothing/Fakepuma.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/Puma.jpg" alt="Puma Concept" loading="lazy" decoding="async">
+          <span class="version-badge"><i class="fa-solid fa-layer-group"></i> 2 Variations</span>
+        </div>
+        <div class="poster-meta">
+          <h2>Puma Brand Studies</h2>
+          <p>Reimagined sport-culture graphic concepts.</p>
+          <span>2024 / 2 Variations</span>
+        </div>
+      </article>
+
+      <!-- PCardi / BCardi Knitwear Collection (4 Variations) -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="Cardigan Knitwear Collection" 
+               data-category="Exhibition — Fashion"
+               data-description="Textured knitwear with rich color blocking."
+               data-versions='["Images/Clothing/PCardi (1).jpeg","Images/Clothing/PCardi (2).jpeg","Images/Clothing/BCard (1).jpg","Images/Clothing/BCard (2).jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/PCardi (1).jpeg" alt="Cardigan Collection" loading="lazy" decoding="async">
+          <span class="version-badge"><i class="fa-solid fa-layer-group"></i> 4 Variations</span>
+        </div>
+        <div class="poster-meta">
+          <h2>Cardigan Knitwear Collection</h2>
+          <p>Textured knitwear with rich color blocking.</p>
+          <span>2023 / 4 Variations</span>
+        </div>
+      </article>
+
+      <!-- Additional Cardigan Studies (Cardi23 & Cardi52) -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="Cardigan Print Studies" 
+               data-category="Exhibition — Fashion"
+               data-description="Experimental pattern integration for knitwear."
+               data-versions='["Images/Clothing/Cardi23.jpg","Images/Clothing/Cardi52.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/Cardi23.jpg" alt="Cardigan 23" loading="lazy" decoding="async">
+          <span class="version-badge"><i class="fa-solid fa-layer-group"></i> 2 Editions</span>
+        </div>
+        <div class="poster-meta">
+          <h2>Cardigan Print Studies</h2>
+          <p>Experimental pattern integration for knitwear.</p>
+          <span>2023 / 2 Editions</span>
+        </div>
+      </article>
+
+      <!-- Typography Hoodies (White & Black Text) -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="Text Heavy Hoodies" 
+               data-category="Exhibition — Fashion"
+               data-description="Minimalist typographical placement garment."
+               data-versions='["Images/Clothing/White text.jpg","Images/Clothing/Black text.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/White text.jpg" alt="White Text Hoodie" loading="lazy" decoding="async">
+          <span class="version-badge"><i class="fa-solid fa-layer-group"></i> 2 Colorways</span>
+        </div>
+        <div class="poster-meta">
+          <h2>Text Heavy Hoodies</h2>
+          <p>Minimalist typographical placement garment.</p>
+          <span>2024 / 2 Colorways</span>
+        </div>
+      </article>
+
+      <!-- Black Hoodies (Blackbck & Blackho) -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="Blackout Hoodies" 
+               data-category="Exhibition — Fashion"
+               data-description="Dark tonal layering and architectural hood shapes."
+               data-versions='["Images/Clothing/Blackbck.png","Images/Clothing/blackho.png"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/Blackbck.png" alt="Blackout Hoodie" loading="lazy" decoding="async">
+          <span class="version-badge"><i class="fa-solid fa-layer-group"></i> 2 Cuts</span>
+        </div>
+        <div class="poster-meta">
+          <h2>Blackout Hoodies</h2>
+          <p>Dark tonal layering and architectural hood shapes.</p>
+          <span>2024 / 2 Cuts</span>
+        </div>
+      </article>
+
+      <!-- Skullz Series (Dkullz & Dskullz) -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="Skullz Motif Piece" 
+               data-category="Exhibition — Fashion"
+               data-description="Distressed graphic motif on oversized washed cotton."
+               data-versions='["Images/Clothing/Dkullz.jpg","Images/Clothing/Dskullz.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/Dkullz.jpg" alt="Skullz Garment" loading="lazy" decoding="async">
+          <span class="version-badge"><i class="fa-solid fa-layer-group"></i> 2 Variations</span>
+        </div>
+        <div class="poster-meta">
+          <h2>Skullz Motif Piece</h2>
+          <p>Distressed graphic motif on oversized washed cotton.</p>
+          <span>2024 / 2 Variations</span>
+        </div>
+      </article>
+
+      <!-- Ivy's Eyes Collection (Ivyseyes & Buttonupivys) -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="Ivy's Eyes Apparel" 
+               data-category="Exhibition — Fashion"
+               data-description="Illustrative motif applied across woven and jersey bases."
+               data-versions='["Images/Clothing/Ivyseyes.jpg","Images/Clothing/Buttonupivys.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/Ivyseyes.jpg" alt="Ivy's Eyes" loading="lazy" decoding="async">
+          <span class="version-badge"><i class="fa-solid fa-layer-group"></i> 2 Items</span>
+        </div>
+        <div class="poster-meta">
+          <h2>Ivy's Eyes Apparel</h2>
+          <p>Illustrative motif applied across woven and jersey bases.</p>
+          <span>2023 / 2 Items</span>
+        </div>
+      </article>
+
+      <!-- Mac Shirt -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="Mac Overshirt" 
+               data-category="Exhibition — Fashion"
+               data-description="Utility outerwear piece with structured pocketing."
+               data-versions='["Images/Clothing/Mac shirt.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/Mac shirt.jpg" alt="Mac Overshirt" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Mac Overshirt</h2>
+          <p>Utility outerwear piece with structured pocketing.</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- People Garment -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="People Graphic Tee" 
+               data-category="Exhibition — Fashion"
+               data-description="Crowd portrait graphic print."
+               data-versions='["Images/Clothing/People.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/People.jpg" alt="People Graphic Tee" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>People Graphic Tee</h2>
+          <p>Crowd portrait graphic print.</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Ronadin Piece -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="Ronadin Top" 
+               data-category="Exhibition — Fashion"
+               data-description="Athletic silhouette with custom typography."
+               data-versions='["Images/Clothing/Ronadin.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/Ronadin.jpg" alt="Ronadin Top" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Ronadin Top</h2>
+          <p>Athletic silhouette with custom typography.</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Blue Garment -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="Blue Tonal Piece" 
+               data-category="Exhibition — Fashion"
+               data-description="Cobalt dyed fabric with contrast paneling."
+               data-versions='["Images/Clothing/Blue.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/Blue.jpg" alt="Blue Tonal Piece" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Blue Tonal Piece</h2>
+          <p>Cobalt dyed fabric with contrast paneling.</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Cherry Garment -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="Cherry Motif Garment" 
+               data-category="Exhibition — Fashion"
+               data-description="Botanical print accent piece."
+               data-versions='["Images/Clothing/cherry.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/cherry.jpg" alt="Cherry Garment" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Cherry Motif Garment</h2>
+          <p>Botanical print accent piece.</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+      <!-- Come Garment -->
+      <article class="poster-card reveal artwork-card" 
+               data-title="Come Graphic Piece" 
+               data-category="Exhibition — Fashion"
+               data-description="Bold focal text graphic design."
+               data-versions='["Images/Clothing/Come.jpg"]'>
+        <div class="image-wrapper">
+          <img src="Images/Clothing/Come.jpg" alt="Come Graphic Piece" loading="lazy" decoding="async">
+        </div>
+        <div class="poster-meta">
+          <h2>Come Graphic Piece</h2>
+          <p>Bold focal text graphic design.</p>
+          <span>2024</span>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       LIGHTBOX POPUP MODAL WITH VERSION PREVIEWS
+       ========================================================================== -->
+  <div class="art-modal" id="artModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="art-modal-container">
+      <button class="art-modal-close" aria-label="Close modal">Close [X]</button>
+      
+      <div class="art-modal-stage">
+        <button class="modal-nav prev" aria-label="Previous image">&larr;</button>
+        <img src="" alt="Selected Garment Preview" class="reward-preview-img" id="modalImage">
+        <button class="modal-nav next" aria-label="Next image">&rarr;</button>
+      </div>
+
+      <div class="art-modal-sidebar">
+        <div class="modal-meta-header">
+          <span class="category-tag">Exhibition — Fashion</span>
+          <h2 class="modal-title" id="modalTitle">GARMENT PREVIEW</h2>
+        </div>
+        
+        <div class="modal-meta-body">
+          <p class="modal-description"></p>
+        </div>
+
+        <div class="version-section">
+          <span class="version-section-title">Available Versions / Views</span>
+          <div class="version-thumbnails">
+            <!-- JavaScript dynamically mounts version thumbnail previews here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="site-footer" id="contact">
+    <div class="social-links">
+      <a href="https://www.instagram.com/finnyoudidthis/" target="_blank" rel="noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/" target="_blank" rel="noreferrer" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://github.com/" target="_blank" rel="noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+      <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="mailto:ali@museumfolio.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       SCRIPTS
+       ========================================================================== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.21/dist/lenis.min.js"></script>
+  <script src="script.js"></script>
 </body>
-
-
-<div class="glitch-transition"></div>
-<script src="script.js"></script>
-<div class="lightbox" id="lightbox">
-  <span class="close">&times;</span>
-  <img class="lightbox-img" id="lightboxImg">
-
-  <div class="nav prev">&#10094;</div>
-  <div class="nav next">&#10095;</div>
 </html>

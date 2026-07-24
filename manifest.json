@@ -1,0 +1,12 @@
+{
+  "name": "Finn | Digital Museum",
+  "short_name": "Digital Museum",
+  "icons": [
+    { "src": "Images/FYDT/Favicon.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "Images/FYDT/Favicon.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "start_url": "/Index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000"
+}
